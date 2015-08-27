@@ -1,11 +1,12 @@
 require("styles/mobile.scss");
 
-var id     = Math.random().toString(36).substring(2,7),
-    socket = require('socket.io-client/socket.io.js').connect(window.location.host);
+var id     = window.localStorage.getItem('playerId') || Math.random().toString(36).substring(2,7),
+    socket = require('socket.io-client/socket.io.js').connect(window.location.host,{query: 'playerId='+id});
+
+window.localStorage.setItem('playerId', id);
 
 socket.on('connect', function(){
   // document.write('connected');
-
   var pole = false,
       calibrated = false,
       first = false;

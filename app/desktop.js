@@ -15,6 +15,11 @@ socket.on('client:position', function (data) {
   orientation.handleOrientation(data.event);
 });
 
+socket.on('client:connect', function(data) {
+  console.log(data);
+  console.log('hello')
+});
+
 socket.on('client:fire', function (data) {
   console.log('FAYA!');
   ball.color = ['red', 'green', 'blue', 'yellow'][Math.round(Math.random() * 3)];

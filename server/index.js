@@ -15,7 +15,7 @@ if (!isProd) {
   // We require the bundler inside the if block because
   // it is only needed in a development environment. Later
   // you will see why this is a good idea
-  require('./bundle.js')(); 
+  require('./bundle.js')();
 
   // Any requests to localhost:3000/build is proxied
   // to webpack-dev-server
@@ -26,7 +26,7 @@ if (!isProd) {
 
 // Handle socket streams
 io.on('connection', function (socket) {
-  socket.emit('client:position', { message: 'world' });
+  socket.broadcast.emit('client:connect', { playerId: socket.handshake.query.playerId });
 
   socket.on('device:position', function(data){
     io.sockets.emit('client:position', data);
@@ -39,11 +39,13 @@ io.on('connection', function (socket) {
   socket.on('disconnect', function(){
     // console.log('someone died');
   });
+
+  console.log(socket.handshake.query.playerId)
 });
 
 // Catchall - redirect to app base
 app.get('*', function(req, res){
-  res.sendfile(publicPath + (/Android|iPhone|iPad/.test(req.headers['user-agent']) ? '/mobile.html' : '/desktop.html'));
+  res.sendFile(publicPath + (/Android|iPhone|iPad/.test(req.headers['user-agent']) ? '/mobile.html' : '/desktop.html'));
 });
 
 // It is important to catch any errors from the proxy or the
