@@ -63,7 +63,7 @@ class Circle extends Movable {
   constructor(x, y, r, color, ctx) {
     super(x, y);
     this.r = r;
-    this.z = 0;
+    this.rotation = 0;
     this.ctx = ctx;
     this.color = color;
   }
@@ -72,7 +72,7 @@ class Circle extends Movable {
     this.ctx.save();
 
     this.ctx.translate(this.x, this.y);
-    this.ctx.rotate(this.z);
+    this.ctx.rotate(this.rotation);
 
     // Ball
     this.ctx.beginPath();

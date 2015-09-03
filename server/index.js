@@ -40,7 +40,6 @@ io.on('connection', function (socket) {
     // console.log('someone died');
   });
 
-  console.log(socket.handshake.query.playerId)
 });
 
 // Catchall - redirect to app base
