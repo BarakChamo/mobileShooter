@@ -34,7 +34,7 @@ class Controller {
     var dx = this.scaleValue(alpha, -2, 2, -200, -160);
     var dy = this.scaleValue(beta, -2, 2, -40, -20);
 
-    console.log(dx, dy, gamma);
+    // console.log(dx, dy, gamma);
 
     // this.obj.move(dx, dy);
     this.obj.xVelocity += dx;

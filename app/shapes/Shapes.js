@@ -1,3 +1,4 @@
+'use strict';
 var WORLD = require('../constants/world');
 
 class Movable {
@@ -41,22 +42,23 @@ class Movable {
 //   }
 // }
 
-// class Rectangle extends Movable {
-//   constructor(x, y, width, height, color) {
-//     super(x, y);
-//     this.width = width;
-//     this.height = height;
-//     this.color = color;
-//   }
+class Rectangle extends Movable {
+  constructor(x, y, width, height, color, ctx) {
+    super(x, y);
+    this.width = width;
+    this.height = height;
+    this.color = color;
+    this.ctx = ctx;
+  }
 
-//   draw() {
-//     ctx.beginPath();
-//       ctx.rect(this.x, this.y, this.width, this.height);
-//       ctx.fillStyle = this.color;
-//       ctx.fill();
-//       ctx.closePath();
-//   }
-// }
+  draw() {
+    this.ctx.beginPath();
+    this.ctx.rect(this.x, this.y, this.width, this.height);
+    this.ctx.fillStyle = this.color;
+    this.ctx.fill();
+    this.ctx.closePath();
+  }
+}
 
 // class Platform extends Rectangle {
 //   constructor(x, y, width, height, color) {
@@ -130,12 +132,37 @@ class Ball extends Circle {
   }
 }
 
+class Bullet extends Rectangle {
+  constructor(x, y, xV, yV, rotation, bullets, ctx) {
+    super(x, y, 5, 5, 'black', ctx)
+    this.bullets = bullets;
+    this.xVelocity = -100 * Math.cos(rotation + (Math.PI * 90 / 180)) + xV / 2;
+    this.yVelocity = -100 * Math.sin(rotation + (Math.PI * 90 / 180)) + yV / 2;
+  }
+
+  update(dt) {
+
+    if (this.x > WORLD.width - this.height || this.x < 0 + this.height) {
+      this.bullets.splice(this.bullets.indexOf(this), 1);
+    }
+
+    if (this.y <= 0 + this.height || this.y > WORLD.height - this.height) {
+      this.bullets.splice(this.bullets.indexOf(this), 1);
+    }
+
+    this.move(this.xVelocity * dt, this.yVelocity * dt);
+  }
+
+}
+
 // module.exports.Polygon = Polygon;
 // module.exports.Triangle = Triangle;
-// module.exports.Rectangle = Rectangle;
+module.exports.Rectangle = Rectangle;
 // module.exports.Circle = Circle;
-// module.exports.Ball = Ball;
+module.exports.Ball = Ball;
+module.exports.Bullet = Bullet;
 // module.exports.Platform = Platform;
 
 
-module.exports = Ball;
+// module.exports = Ball;
+

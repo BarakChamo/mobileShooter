@@ -7,22 +7,22 @@ var raf         = require('./utils/raf'),
 
     WORLD       = require('./constants/world'),
     socket      = require('socket.io-client/socket.io.js').connect(window.location.host),
-    Ball        = require('./shapes/Ball'),
+    Shapes      = require('./shapes/Shapes'),
 
     MotionController = require('./controllers/Orientation'),
     KeyboardController = require('./controllers/Keyboard');
 
 var playerStore = {};
 var controllerStore = {};
+var bullets = [];
 
 setup.setDimensions(ctx);
 
 socket.on('client:connect', function(data) {
-  console.log(data.id, 'hello');
   var id = data.id;
-  var player = new Ball(WORLD.width / 2, WORLD.height / 2, ctx);
+  var player = new Shapes.Ball(WORLD.width / 2, WORLD.height / 2, ctx);
   playerStore[id] =  player;
-  controllerStore[id] = new MotionController(player);  
+  controllerStore[id] = new MotionController(player);
 });
 
 socket.on('client:position', function (data) {
@@ -37,7 +37,12 @@ socket.on('client:motion', function (data) {
 
 socket.on('client:fire', function (data) {
   console.log('FAYA!');
-  playerStore[data.id].color = ['red', 'green', 'blue', 'yellow'][Math.round(Math.random() * 3)];
+  var player = playerStore[data.id];
+  player.color = ['red', 'green', 'blue', 'yellow'][Math.round(Math.random() * 3)];
+  var bullet = new Shapes.Bullet(player.x, player.y, player.xVelocity, player.yVelocity, player.rotation, bullets, ctx)
+  player.xVelocity -= bullet.xVelocity / 2;
+  player.yVelocity -= bullet.yVelocity / 2;
+  bullets.push(bullet);
 });
 
 /*
@@ -47,6 +52,9 @@ function update(dt) {
   for (var id in playerStore){
     playerStore[id].update(dt);
   }
+  for (var i in bullets){
+    bullets[i].update(dt);
+  }
 }
 
 /*
@@ -55,6 +63,9 @@ function update(dt) {
 function render() {
   for (var id in playerStore){
     playerStore[id].draw();
+  }
+  for (var i in bullets){
+    bullets[i].draw();
   }
 };
 
