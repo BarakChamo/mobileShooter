@@ -1,50 +1,61 @@
 require("styles/desktop.scss");
 
-// Constants
-var WORLD       = require('./constants/world'),
-    socket      = require('socket.io-client/socket.io.js').connect(window.location.host),
-    raf         = require('./utils/raf'),
+var raf         = require('./utils/raf'), 
+    setup       = require('./utils/setup'),
     canvas      = document.querySelector('#canvas'),
     ctx         = canvas.getContext('2d'),
-    Ball        = require('./shapes/ball'),
-    ball        = new Ball(WORLD.width / 2, WORLD.height / 2, ctx),
-    orientation = new (require('./controllers/orientation'))(ball);
+
+    WORLD       = require('./constants/world'),
+    socket      = require('socket.io-client/socket.io.js').connect(window.location.host),
+    Ball        = require('./shapes/Ball'),
+
+    MotionController = require('./controllers/Orientation'),
+    KeyboardController = require('./controllers/Keyboard');
+
+var playerStore = {};
+var controllerStore = {};
+
+setup.setDimensions(ctx);
+
+socket.on('client:connect', function(data) {
+  console.log(data.id, 'hello');
+  var id = data.id;
+  var player = new Ball(WORLD.width / 2, WORLD.height / 2, ctx);
+  playerStore[id] =  player;
+  controllerStore[id] = new MotionController(player);  
+});
 
 socket.on('client:position', function (data) {
   if (!data.event) return;
-  orientation.handleOrientation(data.event);
+  if (!controllerStore[data.id]) return;
+  controllerStore[data.id].handleOrientationBeta(data.event);
 });
 
-socket.on('client:connect', function(data) {
-  console.log(data);
-  console.log('hello')
+socket.on('client:motion', function (data) {
+  //do nothing
 });
 
 socket.on('client:fire', function (data) {
   console.log('FAYA!');
-  ball.color = ['red', 'green', 'blue', 'yellow'][Math.round(Math.random() * 3)];
+  playerStore[data.id].color = ['red', 'green', 'blue', 'yellow'][Math.round(Math.random() * 3)];
 });
 
-function setDimensions() {
-  var rw, rh, r;
-  rw = window.innerWidth / WORLD.width;
-  rh = window.innerHeight / WORLD.height;
-  r = Math.min(rw, rh);
+/*
+  tell objects in the game to update their positions
+ */
+function update(dt) {
+  for (var id in playerStore){
+    playerStore[id].update(dt);
+  }
+}
 
-  canvas.height = WORLD.height * r;
-  canvas.width = WORLD.width * r;
-
-  canvas.style.marginTop = rw <= rh ? String((window.innerHeight - canvas.height) / 2) + 'px' : 0;
-
-  ctx.scale(r, r);
-};
-
-// Resize canvas
-setDimensions();
-
-// Renderer
+/*
+  tell objects in the game to draw themselves
+ */
 function render() {
-  ball.draw();
+  for (var id in playerStore){
+    playerStore[id].draw();
+  }
 };
 
 raf.start(function(elapsed) {
@@ -63,5 +74,6 @@ raf.start(function(elapsed) {
   ctx.fill();
   ctx.closePath();
 
+  update(elapsed);
   render();
 });

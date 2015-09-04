@@ -11,30 +11,50 @@ socket.on('connect', function(){
   //     calibrated = false,
   //     first = false;
 
-  // Throttle updates
-  var update = _.throttle(function(event) {
-    // if (!first) return first = true;
-    // pole = calibrated ? pole : event.alpha;
-    // calibrated = calibrated || true;
-
-    socket.emit('device:position', {
-      id: id,
-      event: {
-        // alpha: (pole + event.alpha) % 360,
-        alpha: event.alpha,
-        beta:  event.beta,
-        gamma: event.gamma
-      }
-    });
-  }, 0);
-
-  var faya = function(){
-    socket.emit('device:fire', {
-      strength: 1
-    });
-  }
-
-  window.addEventListener('deviceorientation', update);
+  window.addEventListener('deviceorientation', updateOrientation);
+  
+  window.addEventListener('devicemotion', updateMotion);
 
   document.addEventListener('touchstart', faya);
+
 });
+
+// Throttle updates
+var updateOrientation = _.throttle(function(event) {
+  // if (!first) return first = true;
+  // pole = calibrated ? pole : event.alpha;
+  // calibrated = calibrated || true;
+
+  socket.emit('device:position', {
+    id: id,
+    event: {
+      // alpha: (pole + event.alpha) % 360,
+      alpha: event.alpha,
+      beta:  event.beta,
+      gamma: event.gamma
+    }
+  });
+}, 0);
+
+var updateMotion = _.throttle(function(event) {
+  // if (!first) return first = true;
+  // pole = calibrated ? pole : event.alpha;
+  // calibrated = calibrated || true;
+
+  socket.emit('device:motion', {
+    id: id,
+    event: {
+      // alpha: (pole + event.alpha) % 360,
+      alpha: event.acceleration.x,
+      beta:  event.acceleration.y,
+      gamma: event.acceleration.z
+    }
+  });
+}, 0);
+
+var faya = function(){
+socket.emit('device:fire', {
+  id: id,
+  strength: 1
+});
+}

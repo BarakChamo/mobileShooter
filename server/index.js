@@ -26,10 +26,14 @@ if (!isProd) {
 
 // Handle socket streams
 io.on('connection', function (socket) {
-  socket.broadcast.emit('client:connect', { playerId: socket.handshake.query.playerId });
+  socket.broadcast.emit('client:connect', { id: socket.handshake.query.playerId });
 
   socket.on('device:position', function(data){
     io.sockets.emit('client:position', data);
+  });
+
+  socket.on('device:motion', function(data){
+    io.sockets.emit('client:motion', data);
   });
 
   socket.on('device:fire', function(data){

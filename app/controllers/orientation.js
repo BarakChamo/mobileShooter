@@ -5,15 +5,13 @@ var WORLD = require('../constants/world');
 class Controller {
   constructor(obj){
     this.obj = obj;
-    this.yRange = [0.0, 50.0];
-    this.xRange = 45;
   }
 
   scaleValue(value, sMin, sMax, min, max) {
     return (sMax - sMin) * (value - min) / (max - min) + sMin;
   }
 
-  handleOrientation(event) {
+  handleOrientationAbsolute(event) {
     var alpha = -(event.alpha + 30) % 60; // compass
     var beta = -event.beta;               // tilt
     var gamma = event.gamma;              // rotation
@@ -28,46 +26,22 @@ class Controller {
     this.obj.rotation = gamma * Math.PI / 180;
   }
 
-  // handleOrientation(event) {
-  //   var x = this.xRange - (event.alpha + this.xRange / 2) % this.xRange;
-  //   var y = this.yRange[1] - (event.beta) % this.yRange[1];
-  //   var z = event.gamma * Math.PI / 180;
+  handleOrientationBeta(event) {
+    var alpha = -(event.alpha + 180) % 360; // compass
+    var beta = -event.beta;               // tilt
+    var gamma = event.gamma;              // rotation
 
-  //   this.obj.x = x * (WORLD.width / this.xRange);
-  //   this.obj.y = y * (WORLD.height / this.yRange[1])// * [180 / this.yRange[1]]; 
+    var dx = this.scaleValue(alpha, -2, 2, -200, -160);
+    var dy = this.scaleValue(beta, -2, 2, -40, -20);
 
-  //   this.obj.z = z;
-  // }
+    console.log(dx, dy, gamma);
 
-  keyDownHandler(e) {
-    if(e.keyCode == 37) {
-      this.obj.moveLeft = true;
-    }
-    else if(e.keyCode == 38) {
-      this.obj.moveUp = true;
-    }
-    else if(e.keyCode == 39) {
-      this.obj.moveRight = true;
-    }
-    else if(e.keyCode == 40) {
-      this.obj.moveDown = true;
-    }
+    // this.obj.move(dx, dy);
+    this.obj.xVelocity += dx;
+    this.obj.yVelocity += dy;
+    this.obj.rotation = gamma * Math.PI / 180;
   }
 
-  keyUpHandler(e) {
-    if(e.keyCode == 37) {
-      this.obj.moveLeft = false;
-    }
-    if(e.keyCode == 38) {
-      this.obj.moveUp = false;
-    }
-    if(e.keyCode == 39) {
-      this.obj.moveRight = false;
-    }
-    if(e.keyCode == 40) {
-      this.obj.moveDown = false;
-    }
-  }
 }
 
 module.exports = Controller;

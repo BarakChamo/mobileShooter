@@ -1,11 +1,16 @@
+var WORLD = require('../constants/world');
+
 class Movable {
   constructor(x, y) {
     this.x = x;
     this.y = y;
+    this.rotation = 0;
+    this.xVelocity = 0;
+    this.yVelocity = 0;
     this.moveLeft = false;
-      this.moveUp = false;
-      this.moveRight = false;
-      this.moveDown = false;
+    this.moveUp = false;
+    this.moveRight = false;
+    this.moveDown = false;
   }
 
   move(dx, dy) {
@@ -63,7 +68,6 @@ class Circle extends Movable {
   constructor(x, y, r, color, ctx) {
     super(x, y);
     this.r = r;
-    this.rotation = 0;
     this.ctx = ctx;
     this.color = color;
   }
@@ -102,8 +106,7 @@ class Circle extends Movable {
 class Ball extends Circle {
   constructor(x, y, ctx) {
     super(x, y, 10, 'red', ctx);
-      this.xVelocity = 1;
-      this.yVelocity = -4;
+
   }
 
   intersects(b) {
@@ -112,6 +115,18 @@ class Ball extends Circle {
               this.x + this.width > b.x &&
               this.y < b.y + b.height &&
               this.y + this.height > b.y;
+  }
+
+  update(dt) {    
+    if (this.x > WORLD.width - this.r || this.x < 0 + this.r) {
+      this.xVelocity *= -1;
+    }
+
+    if (this.y <= 0 + this.r || this.y > WORLD.height - this.r) {
+      this.yVelocity *= -1;
+    }
+
+    this.move(this.xVelocity * dt, this.yVelocity * dt);
   }
 }
 
