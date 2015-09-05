@@ -1,17 +1,22 @@
-var WORLD = require('../constants/world');
+import WORLD from '../constants/world'
 
-var setDimensions = function(ctx) {
-  var rw, rh, r;
-  rw = window.innerWidth / WORLD.width;
-  rh = window.innerHeight / WORLD.height;
-  r = Math.min(rw, rh);
+var res = 1
 
-  canvas.height = WORLD.height * r;
-  canvas.width = WORLD.width * r;
+export default {
+	setDimensions: function(ctx) {
+	  var rw, rh, r;
+	  rw = window.innerWidth / WORLD.width;
+	  rh = window.innerHeight / WORLD.height;
+	  r = Math.min(rw, rh);
 
-  canvas.style.marginTop = rw <= rh ? String((window.innerHeight - canvas.height) / 2) + 'px' : 0;
+	  canvas.height = WORLD.height * r
+	  canvas.width = WORLD.width * r
 
-  ctx.scale(r, r);
-};
+	  WORLD.height *= res
+	  WORLD.width *=  res
 
-module.exports.setDimensions = setDimensions;
+	  canvas.style.marginTop = rw <= rh ? String((window.innerHeight - canvas.height) / 2) + 'px' : 0
+
+	  ctx.scale(r / res, r / res)
+	}
+}

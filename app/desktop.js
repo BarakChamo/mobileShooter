@@ -11,8 +11,8 @@ import setup from './utils/setup'
 import WORLD from './constants/world'
 
 // Components
-import  Player from './components/Player'
-import  Bullet from './components/Bullet'
+import Player from './components/Player'
+import Bullet from './components/Bullet'
 
 // Controllers
 import KeyboardController  from './controllers/Keyboard'
@@ -98,7 +98,7 @@ raf.start(function(elapsed) {
   ctx.fillStyle = 'black'
   ctx.fill()
   ctx.closePath()
-
+  
   ctx.beginPath()
   ctx.rect(0, WORLD.height/2, WORLD.width, 1)
   ctx.fillStyle = 'black'

@@ -1,5 +1,5 @@
 import WORLD       from '../constants/world'
-import {Circle}    from './Shapes'
+import {Circle, Polygon}    from './Shapes'
 import Orientation from '../controllers/Orientation'
 
 export default class Player extends Circle {
@@ -7,7 +7,9 @@ export default class Player extends Circle {
     super(x, y, 10, 'red', ctx);
 
     this.id = id
-    this.controller = new Orientation(this)
+    this.marker = new Polygon(200, 200, 20, 3, 'blue', ctx)
+    this.controller = new Orientation(this, this.marker);
+
   }
 
   intersects(b) {
@@ -35,7 +37,17 @@ export default class Player extends Circle {
     this.yVelocity -= bullet.yVelocity / 2
   }
 
+  pointTo(data) {
+    this.controller.updateTarget()
+  }
+
   accelerate(data) {
     this.controller.handleOrientation(data)
+    this.controller.moveMarker(data)
+  }
+
+  draw() {
+    super.draw()
+    this.marker.draw()
   }
 }

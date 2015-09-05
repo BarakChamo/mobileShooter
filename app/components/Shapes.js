@@ -30,27 +30,58 @@ class Movable extends Base {
   }
 }
 
-// class Polygon {
-//   constructor(points, color) {
-//     ctx.fillStyle = color;
+/*
+  Rectangle
+ */ 
 
-//     ctx.beginPath();
-//     ctx.moveTo(points[0][0], points[0][1]);
+export class Polygon extends Movable {
+  constructor(x, y, r, sides, color, ctx) {
+    super(x, y)
+    if (sides < 3) throw new Error('Invalid Polygon')
 
-//     for (var i = 0; i < points.length; i++) {
-//       ctx.lineTo( points[i][0] , points[i][1] )
-//     }
+    this.x = x
+    this.y = y
+    this.r = r
+    this.sides = sides
+    this.color = color
+    this.ctx = ctx
+  }
 
-//     ctx.closePath();
-//     ctx.fill();
-//   }
-// }
+  draw() {
+    if (this.sides < 3) return;
 
-// class Triangle extends Polygon {
-//   constructor(x, y, color) {
-//     super([[x, y],[x + 50, y],[x + 25, y - 50]], color);
-//   }
-// }
+    var a = (Math.PI * 2)/this.sides;
+
+    this.ctx.save()
+    this.ctx.translate(this.x, this.y)
+    this.ctx.rotate(this.rotation)
+
+    this.ctx.beginPath();
+    this.ctx.moveTo(this.r,0)
+
+    for (var i = 1; i < this.sides; i++) {
+      this.ctx.lineTo(this.r*Math.cos(a*i),this.r*Math.sin(a*i))
+    }
+
+    this.ctx.closePath()
+    this.ctx.lineWidth = 1
+    this.ctx.setLineDash([5])
+    this.ctx.stroke()
+
+    this.ctx.restore()
+
+  }
+}
+
+/*
+  Rectangle
+ */ 
+
+export class Triangle extends Polygon {
+  constructor(x, y, color) {
+    super([[x, y],[x + 50, y],[x + 25, y - 50]], color);
+  }
+}
 
 
 /*
