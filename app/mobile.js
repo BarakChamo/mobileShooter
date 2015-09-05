@@ -1,10 +1,16 @@
-require("styles/mobile.scss");
+import 'styles/mobile.scss'
 
-var id     = window.localStorage.getItem('playerId') || Math.random().toString(36).substring(2,7),
-    socket = require('socket.io-client/socket.io.js').connect(window.location.host,{query: 'playerId='+id});
+// Dependencies
+import SocketIO from 'socket.io-client'
 
-window.localStorage.setItem('playerId', id);
+var id     = (window.localStorage.getItem('playerId') || Math.random().toString(36).substring(2,7)),
+    socket = SocketIO.connect(window.location.host,{query: 'playerId='+id})
 
+// Set player id for reconnection
+window.localStorage.setItem('playerId', id)
+
+
+// Handle Events
 socket.on('connect', function(){
   // document.write('connected');
   // var pole = false,

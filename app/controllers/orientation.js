@@ -1,8 +1,6 @@
-'use strict';
+import WORLD from '../constants/world'
 
-var WORLD = require('../constants/world');
-
-class Controller {
+export default class Controller {
   constructor(obj){
     this.obj = obj;
   }
@@ -26,7 +24,7 @@ class Controller {
     this.obj.rotation = gamma * Math.PI / 180;
   }
 
-  handleOrientationBeta(event) {
+  handleOrientation(event) {
     var alpha = -(event.alpha + 180) % 360; // compass
     var beta = -event.beta;               // tilt
     var gamma = event.gamma;              // rotation
@@ -43,5 +41,3 @@ class Controller {
   }
 
 }
-
-module.exports = Controller;

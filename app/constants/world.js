@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   width: 1000.0,
   height: 1000.0,
   phase: 1,

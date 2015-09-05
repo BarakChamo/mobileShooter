@@ -1,90 +1,110 @@
-require("styles/desktop.scss");
+import 'styles/desktop.scss'
 
-var raf         = require('./utils/raf'), 
-    setup       = require('./utils/setup'),
-    canvas      = document.querySelector('#canvas'),
-    ctx         = canvas.getContext('2d'),
+// Dependencies
+import SocketIO from 'socket.io-client'
 
-    WORLD       = require('./constants/world'),
-    socket      = require('socket.io-client/socket.io.js').connect(window.location.host),
-    Shapes      = require('./shapes/Shapes'),
+// Utilities
+import Raf   from './utils/raf'
+import setup from './utils/setup'
 
-    MotionController = require('./controllers/Orientation'),
-    KeyboardController = require('./controllers/Keyboard');
+// Constants
+import WORLD from './constants/world'
 
-var playerStore = {};
-var controllerStore = {};
-var bullets = [];
+// Components
+import  Player from './components/Player'
+import  Bullet from './components/Bullet'
 
-setup.setDimensions(ctx);
+// Controllers
+import KeyboardController  from './controllers/Keyboard'
+import ComponentController from './controllers/Component'
 
+
+/*
+  Bootstrap
+ */ 
+
+var ctx    = document.querySelector('#canvas').getContext('2d'),
+    socket = SocketIO.connect(window.location.host)
+
+// Initialize component managers
+var playerStore = new ComponentController(Player)
+var bulletStore = new ComponentController(Bullet)
+
+// Set canvas dimension
+setup.setDimensions(ctx)
+
+
+/*
+  Event Handlers
+ */ 
+
+// Client connection
 socket.on('client:connect', function(data) {
-  var id = data.id;
-  var player = new Shapes.Ball(WORLD.width / 2, WORLD.height / 2, ctx);
-  playerStore[id] =  player;
-  controllerStore[id] = new MotionController(player);
+  if (!data.id) return
+  var player = playerStore.add(WORLD.width / 2, WORLD.height / 2, ctx, data.id)
 });
 
+// Client position update
 socket.on('client:position', function (data) {
-  if (!data.event) return;
-  if (!controllerStore[data.id]) return;
-  controllerStore[data.id].handleOrientationBeta(data.event);
+  if (!data.event || !playerStore.getChild(data.id)) return
+  playerStore.getChild(data.id).accelerate(data.event)
 });
 
+// Client motion
 socket.on('client:motion', function (data) {
   //do nothing
 });
 
+// Client fire event
 socket.on('client:fire', function (data) {
-  console.log('FAYA!');
-  var player = playerStore[data.id];
-  player.color = ['red', 'green', 'blue', 'yellow'][Math.round(Math.random() * 3)];
-  var bullet = new Shapes.Bullet(player.x, player.y, player.xVelocity, player.yVelocity, player.rotation, bullets, ctx)
-  player.xVelocity -= bullet.xVelocity / 2;
-  player.yVelocity -= bullet.yVelocity / 2;
-  bullets.push(bullet);
-});
+  var player = playerStore.getChild(data.id),
+      bullet = bulletStore.add(player.x, player.y, player.xVelocity, player.yVelocity, player.rotation, ctx)
+
+  player.fire(bullet)
+})
+
 
 /*
   tell objects in the game to update their positions
  */
+
 function update(dt) {
-  for (var id in playerStore){
-    playerStore[id].update(dt);
-  }
-  for (var i in bullets){
-    bullets[i].update(dt);
-  }
+  playerStore.runOnAll((player, i) => player.update(dt))
+  bulletStore.runOnAll((bullet, i) => bullet.update(dt))
 }
+
 
 /*
   tell objects in the game to draw themselves
  */
 function render() {
-  for (var id in playerStore){
-    playerStore[id].draw();
-  }
-  for (var i in bullets){
-    bullets[i].draw();
-  }
-};
+  playerStore.runOnAll((player, i) => player.draw())
+  bulletStore.runOnAll((bullet, i) => bullet.draw())
+}
+
+
+/*
+  Launch
+ */ 
+
+var raf = new Raf()
 
 raf.start(function(elapsed) {
   // Clear canvas
-  ctx.clearRect(0, 0, WORLD.width, WORLD.height);
+  ctx.clearRect(0, 0, WORLD.width, WORLD.height)
 
-  ctx.beginPath();
-  ctx.rect(WORLD.width/2, 0, 1, WORLD.height);
-  ctx.fillStyle = 'black';
-  ctx.fill();
-  ctx.closePath();
+  ctx.beginPath()
+  ctx.rect(WORLD.width/2, 0, 1, WORLD.height)
+  ctx.fillStyle = 'black'
+  ctx.fill()
+  ctx.closePath()
 
-  ctx.beginPath();
-  ctx.rect(0, WORLD.height/2, WORLD.width, 1);
-  ctx.fillStyle = 'black';
-  ctx.fill();
-  ctx.closePath();
+  ctx.beginPath()
+  ctx.rect(0, WORLD.height/2, WORLD.width, 1)
+  ctx.fillStyle = 'black'
+  ctx.fill()
+  ctx.closePath()
 
-  update(elapsed);
-  render();
+  update(elapsed)
+  render()
 });

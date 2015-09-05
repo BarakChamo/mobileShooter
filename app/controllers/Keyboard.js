@@ -1,6 +1,4 @@
-'use strict';
-
-class Controller {
+export default class Controller {
   constructor(obj) {
     this.obj = obj
   }
@@ -35,5 +33,3 @@ class Controller {
     }
   }
 }
-
-module.exports = Controller;
