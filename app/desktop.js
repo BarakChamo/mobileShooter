@@ -47,7 +47,7 @@ socket.on('client:connect', function(data) {
 // Client position update
 socket.on('client:position', function (data) {
   if (!data.event || !playerStore.getChild(data.id)) return
-  playerStore.getChild(data.id).accelerate(data.event)
+  playerStore.getChild(data.id).pointTo(data.event)
 });
 
 // Client motion
@@ -57,8 +57,11 @@ socket.on('client:motion', function (data) {
 
 // Client fire event
 socket.on('client:fire', function (data) {
-  var player = playerStore.getChild(data.id),
-      bullet = bulletStore.add(player.x, player.y, player.xVelocity, player.yVelocity, player.rotation, ctx)
+  var player = playerStore.getChild(data.id);
+
+  if (!player.x) return
+
+  var  bullet = bulletStore.add(player.x, player.y, player.xVelocity, player.yVelocity, player.rotation, ctx)
 
   player.fire(bullet)
 })
@@ -98,7 +101,7 @@ raf.start(function(elapsed) {
   ctx.fillStyle = 'black'
   ctx.fill()
   ctx.closePath()
-  
+
   ctx.beginPath()
   ctx.rect(0, WORLD.height/2, WORLD.width, 1)
   ctx.fillStyle = 'black'

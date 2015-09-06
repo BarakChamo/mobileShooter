@@ -2,6 +2,8 @@ import WORLD       from '../constants/world'
 import {Circle, Polygon}    from './Shapes'
 import Orientation from '../controllers/Orientation'
 
+var maxDistance = Math.sqrt(Math.pow(WORLD.width, 2) + Math.pow(WORLD.height, 2))
+
 export default class Player extends Circle {
   constructor(x, y, ctx, id) {
     super(x, y, 10, 'red', ctx);
@@ -13,23 +15,28 @@ export default class Player extends Circle {
   }
 
   intersects(b) {
-    console.log(this.x < b.x + b.width, this.x + this.width > b.x, this.y < b.y + b.height, this.y + this.height > b.y);
+    // console.log(this.x < b.x + b.width, this.x + this.width > b.x, this.y < b.y + b.height, this.y + this.height > b.y);
       return  this.x < b.x + b.width && 
               this.x + this.width > b.x &&
               this.y < b.y + b.height &&
               this.y + this.height > b.y;
   }
 
-  update(dt) {    
-    if (this.x > WORLD.width - this.r || this.x < 0 + this.r) {
-      this.xVelocity *= -1;
-    }
+  update(dt) {  
+    this.accelerate()
 
-    if (this.y <= 0 + this.r || this.y > WORLD.height - this.r) {
-      this.yVelocity *= -1;
-    }
+    // if (this.x > WORLD.width - this.r || this.x < 0 + this.r) {
+    //   this.xVelocity *= -1;
+    // }
 
-    this.move(this.xVelocity * dt, this.yVelocity * dt);
+    // if (this.y <= 0 + this.r || this.y > WORLD.height - this.r) {
+    //   this.yVelocity *= -1;
+    // }
+
+    this.marker.rotation += dt * 2
+
+    this.move(this.xVelocity * dt, this.yVelocity * dt)
+    this.marker.move(this.marker.xVelocity * dt, this.marker.yVelocity * dt)
   }
 
   fire(bullet) {
@@ -38,12 +45,22 @@ export default class Player extends Circle {
   }
 
   pointTo(data) {
-    this.controller.updateTarget()
+    this.controller.updateTarget(data)
+
+    // this.marker.x = this.controller.x
+    // this.marker.y = this.controller.y
+
+    this.rotation = this.controller.rotation
   }
 
-  accelerate(data) {
-    this.controller.handleOrientation(data)
-    this.controller.moveMarker(data)
+  accelerate() {
+    // var d = Math.sqrt(Math.pow(this.controller.x - this.x, 2) + Math.pow(this.controller.y - this.y, 2))
+
+    this.xVelocity = ((this.controller.x - this.x) / WORLD.width)  * WORLD.player.velocity || 0
+    this.yVelocity = ((this.controller.y - this.y) / WORLD.height) * WORLD.player.velocity || 0
+
+    this.marker.xVelocity = ((this.controller.x - this.marker.x) / WORLD.width)  * 20000 || 0
+    this.marker.yVelocity = ((this.controller.y - this.marker.y) / WORLD.height) * 20000 || 0
   }
 
   draw() {
