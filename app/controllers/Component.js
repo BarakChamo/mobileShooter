@@ -44,8 +44,8 @@ export default class ComponentController {
 	}
 
 	runOnAll(fn) {
-		for (var component in this.components) {
-			fn(this.components[component])
+		for (var id in this.components) {
+			fn(this.components[id])
 		}
 	}
 

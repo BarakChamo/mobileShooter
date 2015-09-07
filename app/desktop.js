@@ -47,7 +47,7 @@ socket.on('client:connect', function(data) {
 // Client position update
 socket.on('client:position', function (data) {
   if (!data.event || !playerStore.getChild(data.id)) return
-  playerStore.getChild(data.id).pointTo(data.event)
+  playerStore.getChild(data.id).handleOrientation(data.event)
 });
 
 // Client motion
