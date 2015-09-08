@@ -23,8 +23,8 @@ export default class Player extends Circle {
       this.yVelocity *= -1;
     }
 
-    this.xVelocity += ((this.controller.x - this.x) / WORLD.width) 
-    this.yVelocity += ((this.controller.y - this.y) / WORLD.height)
+    this.xVelocity = ((this.controller.x - this.x) / WORLD.width) * 2000
+    this.yVelocity = ((this.controller.y - this.y) / WORLD.height) * 2000
 
     this.rotation = this.controller.rotation
     this.move(this.xVelocity * dt, this.yVelocity * dt)
