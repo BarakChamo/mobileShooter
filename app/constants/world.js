@@ -7,6 +7,7 @@ export default {
   gravity: 1000.0,
 
   player: {
-  	velocity: 2500.0
+  	velocity: 2500.0,
+  	radius: 20
   }
 }

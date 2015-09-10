@@ -7,7 +7,7 @@ var maxDistance = Math.sqrt(Math.pow(WORLD.width, 2) + Math.pow(WORLD.height, 2)
 
 export default class Player extends Circle {
   constructor(x, y, ctx, id) {
-    super(x, y, 10, 'red', ctx);
+    super(x, y, WORLD.player.radius, 'red', ctx);
 
     this.id = id
     this.controller = new Orientation();
