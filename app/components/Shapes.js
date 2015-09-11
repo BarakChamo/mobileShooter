@@ -36,6 +36,10 @@ class Movable extends Base {
             this.y < b.y + b.height &&
             this.y + this.height > b.y;
   }
+
+  collides(shape) {
+    return true
+  }
 }
 
 /*

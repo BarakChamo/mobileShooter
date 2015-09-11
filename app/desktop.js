@@ -20,7 +20,6 @@ import KeyboardController  from './controllers/Keyboard'
 import ComponentController from './controllers/Component'
 import CollisionController from './controllers/Collision'
 
-
 /*
   Bootstrap
  */ 
@@ -34,6 +33,8 @@ let bulletStore    = new ComponentController(Bullet)
 let collisionStore = new CollisionController(WORLD.player.radius * 5)
 
 let grid = new Grid(WORLD.player.radius * 5, ctx)
+
+playerStore.add(WORLD.width / 2, WORLD.height / 2, ctx, 'test')
 
 
 // Set canvas dimension
@@ -80,6 +81,7 @@ socket.on('client:fire', function (data) {
 function update(dt) {
   playerStore.runOnAll((player, i) => player.update(dt))
   bulletStore.runOnAll((bullet, i) => bullet.update(dt))
+  bulletStore.runOnAll((bullet, i) => collisionStore.report(bullet)) 
 }
 
 

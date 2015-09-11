@@ -91,4 +91,8 @@ export default class Base {
 
 		this._maxListeners = newMaxListeners
 	}
+
+	mix(...args) {
+		arguments.forEach( mixin => Object.keys(mixin).forEach( prop => this[prop] = mixin[prop] ) )
+	}
 }
