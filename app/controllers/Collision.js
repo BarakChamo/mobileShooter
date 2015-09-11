@@ -14,13 +14,11 @@ export default class Controller {
   	// components.forEach( component => this.update(component) )
   	const x = Math.floor(component.x / this.q.w) + 1
   	const y = Math.floor(component.y / this.q.h) + 1
-  	console.log(x, y)
   	if (component._cx === x && component._cy === y) return
 
   	if (component._cx) {
   		delete this.quadrants[component._cy][component._cx][component.id]
   	}
-  	console.log(this.quadrants[y], this.quadrants[x])
   	this.quadrants[y][x][component.id] = component
 
   	component._cx = x

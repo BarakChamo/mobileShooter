@@ -82,6 +82,7 @@ function update(dt) {
   playerStore.runOnAll((player, i) => player.update(dt))
   bulletStore.runOnAll((bullet, i) => bullet.update(dt))
   bulletStore.runOnAll((bullet, i) => collisionStore.report(bullet))
+  playerStore.runOnAll((player, i) => collisionStore.report(player))
   playerStore.runOnAll((player, i) => collisionStore.checkForCollision(player)) 
 }
 

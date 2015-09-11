@@ -38,6 +38,7 @@ export default class Movable extends Base {
   }
 
   collides(shape) {
+    if (shape.id === this.id) return
     console.log(shape)
   }
 }
