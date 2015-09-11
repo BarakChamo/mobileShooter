@@ -31,14 +31,21 @@ export default class Movable extends Base {
 
   intersects(b) {
     // console.log(this.x < b.x + b.width, this.x + this.width > b.x, this.y < b.y + b.height, this.y + this.height > b.y);
-    return  this.x < b.x + b.width && 
-            this.x + this.width > b.x &&
-            this.y < b.y + b.height &&
-            this.y + this.height > b.y;
+    return  this.x < b.x + (b.width || b.r * 2) && 
+            this.x + (this.width || this.r * 2) > b.x &&
+            this.y < b.y + (b.height || b.r * 2) &&
+            this.y + (this.height || this.r * 2) > b.y;
   }
 
   collides(shape) {
     if (shape.id === this.id) return
-    console.log(shape)
+    if (this.intersects(shape)) {
+      if (shape.constructor.name === 'Player') {
+        console.log("MOVE IT!")
+      }
+      else if (shape.constructor.name === 'Bullet' && shape.playerThatFired !== this.id) {
+        console.log("I'M HIT!!")
+      }
+    }
   }
 }

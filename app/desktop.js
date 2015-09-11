@@ -68,7 +68,7 @@ socket.on('client:fire', function (data) {
 
   if (!player.x) return
 
-  let bullet = bulletStore.add(player.x, player.y, player.xVelocity, player.yVelocity, player.rotation)
+  let bullet = bulletStore.add(player.x, player.y, player.xVelocity, player.yVelocity, player.rotation, player.id)
 
   player.fire(bullet)
 })
