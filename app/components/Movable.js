@@ -38,6 +38,6 @@ export default class Movable extends Base {
   }
 
   collides(shape) {
-    console.log('collision')
+    console.log(shape)
   }
 }

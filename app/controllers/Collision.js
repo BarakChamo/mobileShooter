@@ -27,7 +27,7 @@ export default class Controller {
   	component._cy = y
   }
 
-  collide(component) {
+  checkForCollision(component) {
   	const x = Math.floor(component.x / this.q.w) + 1
   	const y = Math.floor(component.y / this.q.h) + 1
 

@@ -32,9 +32,9 @@ let playerStore    = new ComponentController(Player)
 let bulletStore    = new ComponentController(Bullet)
 let collisionStore = new CollisionController(WORLD.player.radius * 5)
 
-let grid = new Grid(WORLD.player.radius * 5, ctx)
+let grid = new Grid(WORLD.player.radius * 5)
 
-playerStore.add(WORLD.width / 2, WORLD.height / 2, ctx, 'test')
+playerStore.add(WORLD.width / 2, WORLD.height / 2, 'test')
 
 
 // Set canvas dimension
@@ -48,7 +48,7 @@ setup.setDimensions(ctx)
 // Client connection
 socket.on('client:connect', function(data) {
   if (!data.id) return
-  let player = playerStore.add(WORLD.width / 2, WORLD.height / 2, ctx, data.id)
+  let player = playerStore.add(WORLD.width / 2, WORLD.height / 2, data.id)
 });
 
 // Client position update
@@ -68,7 +68,7 @@ socket.on('client:fire', function (data) {
 
   if (!player.x) return
 
-  let bullet = bulletStore.add(player.x, player.y, player.xVelocity, player.yVelocity, player.rotation, ctx)
+  let bullet = bulletStore.add(player.x, player.y, player.xVelocity, player.yVelocity, player.rotation)
 
   player.fire(bullet)
 })
@@ -81,7 +81,8 @@ socket.on('client:fire', function (data) {
 function update(dt) {
   playerStore.runOnAll((player, i) => player.update(dt))
   bulletStore.runOnAll((bullet, i) => bullet.update(dt))
-  bulletStore.runOnAll((bullet, i) => collisionStore.report(bullet)) 
+  bulletStore.runOnAll((bullet, i) => collisionStore.report(bullet))
+  playerStore.runOnAll((player, i) => collisionStore.checkForCollision(player)) 
 }
 
 
@@ -92,7 +93,6 @@ function render() {
   playerStore.runOnAll((player, i) => player.draw(ctx))
   bulletStore.runOnAll((bullet, i) => bullet.draw(ctx))
 }
-
 
 /*
   Launch
