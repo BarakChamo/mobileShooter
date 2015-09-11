@@ -15,14 +15,6 @@ export default class Player extends Circle {
   }
 
   update(dt) {
-    if (this.x > WORLD.width - this.r || this.x < 0 + this.r) {
-      this.xVelocity *= -1;
-    }
-
-    if (this.y <= 0 + this.r || this.y > WORLD.height - this.r) {
-      this.yVelocity *= -1;
-    }
-
     this.xVelocity = ((this.controller.x - this.x) / WORLD.width) * 2000
     this.yVelocity = ((this.controller.y - this.y) / WORLD.height) * 2000
 
@@ -30,6 +22,22 @@ export default class Player extends Circle {
     this.move(this.xVelocity * dt, this.yVelocity * dt)
 
     this.marker.update(this.controller.x, this.controller.y, this.rotation, dt)
+
+    if (this.x > WORLD.width - this.r) {
+      this.x = WORLD.width - this.r
+    }
+
+    if (this.x < 0 + this.r) {
+      this.x = 0 + this.r
+    }
+
+    if (this.y < 0 + this.r) {
+      this.y = 0 + this.r
+    }
+
+    if (this.y > WORLD.height - this.r) {
+      this.y = WORLD.height - this.r
+    }
   }
 
   fire(bullet) {

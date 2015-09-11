@@ -21,12 +21,12 @@ export default class Movable extends Base {
   }
 
   move(dx, dy) {
-    this.x += dx;
-    this.y += dy;
+    this.x += dx || this.xVelocity;
+    this.y += dy || this.yVelocity;
   }
 
   inBoundries() {
-    return !(this.x > WORLD.width - this.height || this.x < 0 + this.height) || (this.y <= 0 + this.height || this.y > WORLD.height - this.height)
+    return !(this.x > WORLD.width - this.height || this.x < 0 + this.height || this.y <= 0 + this.height || this.y > WORLD.height - this.height)
   }
 
   intersects(b) {
