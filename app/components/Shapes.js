@@ -47,7 +47,7 @@ class Movable extends Base {
  */ 
 
 export class Polygon extends Movable {
-  constructor(x, y, r, sides, color, ctx) {
+  constructor(x, y, r, sides, color) {
     super(x, y)
     if (sides < 3) throw new Error('Invalid Polygon')
 
@@ -56,31 +56,30 @@ export class Polygon extends Movable {
     this.r = r
     this.sides = sides
     this.color = color
-    this.ctx = ctx
   }
 
-  draw() {
+  draw(ctx) {
     if (this.sides < 3) return;
 
     var a = (Math.PI * 2)/this.sides;
 
-    this.ctx.save()
-    this.ctx.translate(this.x, this.y)
-    this.ctx.rotate(this.rotation)
+    ctx.save()
+    ctx.translate(this.x, this.y)
+    ctx.rotate(this.rotation)
 
-    this.ctx.beginPath();
-    this.ctx.moveTo(this.r,0)
+    ctx.beginPath();
+    ctx.moveTo(this.r,0)
 
     for (var i = 1; i < this.sides; i++) {
-      this.ctx.lineTo(this.r*Math.cos(a*i),this.r*Math.sin(a*i))
+      ctx.lineTo(this.r*Math.cos(a*i),this.r*Math.sin(a*i))
     }
 
-    this.ctx.closePath()
-    this.ctx.lineWidth = 1
-    this.ctx.setLineDash([5])
-    this.ctx.stroke()
+    ctx.closePath()
+    ctx.lineWidth = 1
+    ctx.setLineDash([5])
+    ctx.stroke()
 
-    this.ctx.restore()
+    ctx.restore()
 
   }
 }
@@ -101,20 +100,19 @@ export class Triangle extends Polygon {
  */ 
 
 export class Rectangle extends Movable {
-  constructor(x, y, width, height, color, ctx) {
+  constructor(x, y, width, height, color) {
     super(x, y);
     this.width = width;
     this.height = height;
     this.color = color;
-    this.ctx = ctx;
   }
 
-  draw() {
-    this.ctx.beginPath();
-    this.ctx.rect(this.x, this.y, this.width, this.height);
-    this.ctx.fillStyle = this.color;
-    this.ctx.fill();
-    this.ctx.closePath();
+  draw(ctx) {
+    ctx.beginPath();
+    ctx.rect(this.x, this.y, this.width, this.height);
+    ctx.fillStyle = this.color;
+    ctx.fill();
+    ctx.closePath();
   }
 }
 
@@ -124,39 +122,38 @@ export class Rectangle extends Movable {
  */ 
 
 export class Circle extends Movable {
-  constructor(x, y, r, color, ctx) {
+  constructor(x, y, r, color) {
     super(x, y);
     this.r = r;
-    this.ctx = ctx;
     this.color = color;
   }
 
-  draw() {
-    this.ctx.save();
+  draw(ctx) {
+    ctx.save();
 
-    this.ctx.translate(this.x, this.y);
-    this.ctx.rotate(this.rotation);
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.rotation);
 
     // Ball
-    this.ctx.beginPath();
-    this.ctx.arc(0, 0, this.r, 0, 2*Math.PI);
-    this.ctx.fillStyle = this.color;
-    this.ctx.fill();
-    this.ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(0, 0, this.r, 0, 2*Math.PI);
+    ctx.fillStyle = this.color;
+    ctx.fill();
+    ctx.stroke();
 
     // Cross
-    this.ctx.beginPath();
-    this.ctx.rect(0 - this.r, 0, this.r * 2, 1);
-    this.ctx.fillStyle = 'black';
-    this.ctx.fill();
-    this.ctx.closePath();
+    ctx.beginPath();
+    ctx.rect(0 - this.r, 0, this.r * 2, 1);
+    ctx.fillStyle = 'black';
+    ctx.fill();
+    ctx.closePath();
 
-    this.ctx.beginPath();
-    this.ctx.rect(0, 0 - this.r * 2, 1, this.r * 3);
-    this.ctx.fillStyle = 'black';
-    this.ctx.fill();
-    this.ctx.closePath();
+    ctx.beginPath();
+    ctx.rect(0, 0 - this.r * 2, 1, this.r * 3);
+    ctx.fillStyle = 'black';
+    ctx.fill();
+    ctx.closePath();
 
-    this.ctx.restore();
+    ctx.restore();
   }
 }

@@ -5,8 +5,8 @@ import { Rectangle } from './Shapes'
  */ 
 
 export default class Bullet extends Rectangle {
-  constructor(x, y, xV, yV, rotation, ctx) {
-    super(x, y, 5, 5, 'black', ctx)
+  constructor(x, y, xV, yV, rotation) {
+    super(x, y, 5, 5, 'black')
 
     this.xVelocity = -500 * Math.cos(rotation + (Math.PI * 90 / 180)) + xV / 2;
     this.yVelocity = -500 * Math.sin(rotation + (Math.PI * 90 / 180)) + yV / 2;

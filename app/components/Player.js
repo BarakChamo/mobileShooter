@@ -6,12 +6,12 @@ import Orientation from '../controllers/Orientation'
 var maxDistance = Math.sqrt(Math.pow(WORLD.width, 2) + Math.pow(WORLD.height, 2))
 
 export default class Player extends Circle {
-  constructor(x, y, ctx, id) {
-    super(x, y, WORLD.player.radius, 'red', ctx);
+  constructor(x, y, id) {
+    super(x, y, WORLD.player.radius, 'red');
 
     this.id = id
     this.controller = new Orientation();
-    this.marker = new Marker(200, 200, 20, 3, 'blue', ctx)
+    this.marker = new Marker(200, 200, 20, 3, 'blue')
   }
 
   update(dt) {
@@ -41,8 +41,8 @@ export default class Player extends Circle {
     this.controller.handleOrientation(event)
   }
 
-  draw() {
-    super.draw()
-    this.marker.draw()
+  draw(ctx) {
+    super.draw(ctx)
+    this.marker.draw(ctx)
   }
 }

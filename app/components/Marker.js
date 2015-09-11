@@ -2,8 +2,8 @@ import {Circle, Polygon}    from './Shapes'
 import WORLD       from '../constants/world'
 
 export default class Marker extends Polygon {
-	constructor(x, y, radius, sides, color, ctx) {
-		super(x, y, radius, sides, color, ctx)
+	constructor(x, y, radius, sides, color) {
+		super(x, y, radius, sides, color)
 	}
 
 	update(controllerX, controllerY, rotation, dt) {

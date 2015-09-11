@@ -89,8 +89,8 @@ function update(dt) {
   tell objects in the game to draw themselves
  */
 function render() {
-  playerStore.runOnAll((player, i) => player.draw())
-  bulletStore.runOnAll((bullet, i) => bullet.draw())
+  playerStore.runOnAll((player, i) => player.draw(ctx))
+  bulletStore.runOnAll((bullet, i) => bullet.draw(ctx))
 }
 
 
@@ -116,7 +116,7 @@ raf.start(function(elapsed) {
   ctx.fill()
   ctx.closePath()
 
-  grid.draw()
+  grid.draw(ctx)
 
   update(elapsed)
   render()
