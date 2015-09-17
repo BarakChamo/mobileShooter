@@ -1,0 +1,107 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'git+https://github.com/Full-Tilt/Full-Tilt.git' ]
+2 info using npm@2.7.5
+3 info using node@v0.12.2
+4 verbose node symlink /usr/local/bin/node
+5 silly cache add args [ 'git+https://github.com/Full-Tilt/Full-Tilt.git', null ]
+6 verbose cache add spec git+https://github.com/Full-Tilt/Full-Tilt.git
+7 silly cache add parsed spec { raw: 'git+https://github.com/Full-Tilt/Full-Tilt.git',
+7 silly cache add   scope: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: 'git+https://github.com/Full-Tilt/Full-Tilt.git',
+7 silly cache add   spec: 'git+ssh://git@github.com/Full-Tilt/Full-Tilt.git',
+7 silly cache add   type: 'hosted',
+7 silly cache add   hosted:
+7 silly cache add    { type: 'github',
+7 silly cache add      ssh: 'git@github.com:Full-Tilt/Full-Tilt.git',
+7 silly cache add      sshUrl: 'git+ssh://git@github.com/Full-Tilt/Full-Tilt.git',
+7 silly cache add      httpsUrl: 'https://github.com/Full-Tilt/Full-Tilt.git',
+7 silly cache add      directUrl: 'https://raw.githubusercontent.com/Full-Tilt/Full-Tilt/master/package.json' } }
+8 info maybeGithub Attempting git+https://github.com/Full-Tilt/Full-Tilt.git from git://github.com/Full-Tilt/Full-Tilt.git
+9 verbose addRemoteGit git-github-com-Full-Tilt-Full-Tilt-git-01b9cba9 not in flight; caching
+10 info git [ 'config', '--get', 'remote.origin.url' ]
+11 verbose addRemoteGit remote.origin.url: git://github.com/Full-Tilt/Full-Tilt.git
+12 verbose addRemoteGit updating existing cached remote /Users/barakchamo/.npm/_git-remotes/git-github-com-Full-Tilt-Full-Tilt-git-01b9cba9
+13 info git [ 'fetch', '-a', 'origin' ]
+14 verbose addRemoteGit git fetch -a origin (git://github.com/Full-Tilt/Full-Tilt.git)
+15 verbose addRemoteGit set permissions on /Users/barakchamo/.npm/_git-remotes/git-github-com-Full-Tilt-Full-Tilt-git-01b9cba9
+16 verbose addRemoteGit original treeish: master
+17 info git [ 'rev-list', '-n1', 'master' ]
+18 silly addRemoteGit resolved treeish: c6347b1d5f62941e82715d4d7cb8ddb1fab119f7
+19 verbose addRemoteGit resolved Git URL: git://github.com/Full-Tilt/Full-Tilt.git#c6347b1d5f62941e82715d4d7cb8ddb1fab119f7
+20 silly addRemoteGit Git working directory: /tmp/npm-77150-26ef4784/git-cache-de1c6a2d50fd/c6347b1d5f62941e82715d4d7cb8ddb1fab119f7
+21 info git [ 'clone',
+21 info git   '/Users/barakchamo/.npm/_git-remotes/git-github-com-Full-Tilt-Full-Tilt-git-01b9cba9',
+21 info git   '/tmp/npm-77150-26ef4784/git-cache-de1c6a2d50fd/c6347b1d5f62941e82715d4d7cb8ddb1fab119f7' ]
+22 verbose addRemoteGit clone Cloning into '/tmp/npm-77150-26ef4784/git-cache-de1c6a2d50fd/c6347b1d5f62941e82715d4d7cb8ddb1fab119f7'...
+22 verbose addRemoteGit done.
+23 info git [ 'checkout', 'c6347b1d5f62941e82715d4d7cb8ddb1fab119f7' ]
+24 verbose addRemoteGit checkout Note: checking out 'c6347b1d5f62941e82715d4d7cb8ddb1fab119f7'.
+24 verbose addRemoteGit
+24 verbose addRemoteGit You are in 'detached HEAD' state. You can look around, make experimental
+24 verbose addRemoteGit changes and commit them, and you can discard any commits you make in this
+24 verbose addRemoteGit state without impacting any branches by performing another checkout.
+24 verbose addRemoteGit
+24 verbose addRemoteGit If you want to create a new branch to retain commits you create, you may
+24 verbose addRemoteGit do so (now or later) by using -b with the checkout command again. Example:
+24 verbose addRemoteGit
+24 verbose addRemoteGit   git checkout -b new_branch_name
+24 verbose addRemoteGit
+24 verbose addRemoteGit HEAD is now at c6347b1... Updated LICENSE.txt with new copyright information
+25 error addLocal Could not install /tmp/npm-77150-26ef4784/git-cache-de1c6a2d50fd/c6347b1d5f62941e82715d4d7cb8ddb1fab119f7
+26 info maybeGithub Couldn't clone git://github.com/Full-Tilt/Full-Tilt.git
+27 info maybeGithub Now attempting git+https://github.com/Full-Tilt/Full-Tilt.git from git+ssh://git@github.com/Full-Tilt/Full-Tilt.git
+28 verbose addRemoteGit ssh-git-github-com-Full-Tilt-Full-Tilt-git-a2aad492 not in flight; caching
+29 info git [ 'config', '--get', 'remote.origin.url' ]
+30 verbose addRemoteGit remote.origin.url: ssh://git@github.com/Full-Tilt/Full-Tilt.git
+31 verbose addRemoteGit updating existing cached remote /Users/barakchamo/.npm/_git-remotes/ssh-git-github-com-Full-Tilt-Full-Tilt-git-a2aad492
+32 info git [ 'fetch', '-a', 'origin' ]
+33 verbose addRemoteGit git fetch -a origin (ssh://git@github.com/Full-Tilt/Full-Tilt.git)
+34 verbose addRemoteGit set permissions on /Users/barakchamo/.npm/_git-remotes/ssh-git-github-com-Full-Tilt-Full-Tilt-git-a2aad492
+35 verbose addRemoteGit original treeish: master
+36 info git [ 'rev-list', '-n1', 'master' ]
+37 silly addRemoteGit resolved treeish: c6347b1d5f62941e82715d4d7cb8ddb1fab119f7
+38 verbose addRemoteGit resolved Git URL: git+ssh://git@github.com/Full-Tilt/Full-Tilt.git#c6347b1d5f62941e82715d4d7cb8ddb1fab119f7
+39 silly addRemoteGit Git working directory: /tmp/npm-77150-26ef4784/git-cache-81f370893e08/c6347b1d5f62941e82715d4d7cb8ddb1fab119f7
+40 info git [ 'clone',
+40 info git   '/Users/barakchamo/.npm/_git-remotes/ssh-git-github-com-Full-Tilt-Full-Tilt-git-a2aad492',
+40 info git   '/tmp/npm-77150-26ef4784/git-cache-81f370893e08/c6347b1d5f62941e82715d4d7cb8ddb1fab119f7' ]
+41 verbose addRemoteGit clone Cloning into '/tmp/npm-77150-26ef4784/git-cache-81f370893e08/c6347b1d5f62941e82715d4d7cb8ddb1fab119f7'...
+41 verbose addRemoteGit done.
+42 info git [ 'checkout', 'c6347b1d5f62941e82715d4d7cb8ddb1fab119f7' ]
+43 verbose addRemoteGit checkout Note: checking out 'c6347b1d5f62941e82715d4d7cb8ddb1fab119f7'.
+43 verbose addRemoteGit
+43 verbose addRemoteGit You are in 'detached HEAD' state. You can look around, make experimental
+43 verbose addRemoteGit changes and commit them, and you can discard any commits you make in this
+43 verbose addRemoteGit state without impacting any branches by performing another checkout.
+43 verbose addRemoteGit
+43 verbose addRemoteGit If you want to create a new branch to retain commits you create, you may
+43 verbose addRemoteGit do so (now or later) by using -b with the checkout command again. Example:
+43 verbose addRemoteGit
+43 verbose addRemoteGit   git checkout -b new_branch_name
+43 verbose addRemoteGit
+43 verbose addRemoteGit HEAD is now at c6347b1... Updated LICENSE.txt with new copyright information
+44 error addLocal Could not install /tmp/npm-77150-26ef4784/git-cache-81f370893e08/c6347b1d5f62941e82715d4d7cb8ddb1fab119f7
+45 verbose stack Error: Invalid version: "0.7"
+45 verbose stack     at Object.module.exports.fixVersionField (/usr/local/lib/node_modules/npm/node_modules/normalize-package-data/lib/fixer.js:190:13)
+45 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/normalize-package-data/lib/normalize.js:30:38
+45 verbose stack     at Array.forEach (native)
+45 verbose stack     at normalize (/usr/local/lib/node_modules/npm/node_modules/normalize-package-data/lib/normalize.js:29:15)
+45 verbose stack     at final (/usr/local/lib/node_modules/npm/node_modules/read-package-json/read-json.js:368:33)
+45 verbose stack     at then (/usr/local/lib/node_modules/npm/node_modules/read-package-json/read-json.js:127:33)
+45 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-package-json/read-json.js:267:40
+45 verbose stack     at evalmachine.<anonymous>:334:14
+45 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/graceful-fs/graceful-fs.js:102:5
+45 verbose stack     at FSReqWrap.oncomplete (evalmachine.<anonymous>:95:15)
+46 verbose cwd /Users/barakchamo/Documents/Development/RC/web/shooter
+47 error Darwin 14.5.0
+48 error argv "node" "/usr/local/bin/npm" "install" "git+https://github.com/Full-Tilt/Full-Tilt.git"
+49 error node v0.12.2
+50 error npm  v2.7.5
+51 error Invalid version: "0.7"
+52 error If you need help, you may report this error at:
+52 error     <https://github.com/npm/npm/issues>
+53 verbose exit [ 1, true ]
