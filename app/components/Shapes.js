@@ -1,14 +1,23 @@
-import WORLD from '../constants/world'
-import Base from './Base'
-import Movable from './Movable'
+import WORLD   from '../constants/world'
+import Base    from './Base'
+
+class Shape extends Base {
+  constructor(x, y, r, sides, color) {
+    super(x, y)
+
+    this.x = x
+    this.y = y    
+  }
+}
 
 /*
   Rectangle
  */ 
 
-export class Polygon extends Movable {
+export class Polygon extends Shape {
   constructor(x, y, r, sides, color) {
     super(x, y)
+
     if (sides < 3) throw new Error('Invalid Polygon')
 
     this.x = x
@@ -59,7 +68,7 @@ export class Triangle extends Polygon {
   Rectangle
  */ 
 
-export class Rectangle extends Movable {
+export class Rectangle extends Shape {
   constructor(x, y, width, height, color) {
     super(x, y);
     this.width = width;
@@ -81,7 +90,7 @@ export class Rectangle extends Movable {
   Circle
  */ 
 
-export class Circle extends Movable {
+export class Circle extends Shape {
   constructor(x, y, r, color) {
     super(x, y);
     this.r = r;

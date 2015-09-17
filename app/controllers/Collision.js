@@ -7,11 +7,20 @@ export default class Controller {
   		h: r
   	}  
 
+    this.type
+
   	this.quadrants = Array.from({length: WORLD.height / this.q.h + 2}, (v, i) => Array.from({length:  WORLD.width / this.q.w + 2}, (v, i) => new Object ))
   }
 
+  add(component) {
+    component.controllers.push(this)
+  }
+
+  removeChild(component) {
+    delete this.quadrants[component._cy][component._cx][component.id]
+  }
+
   report(component) {
-  	// components.forEach( component => this.update(component) )
   	const x = Math.floor(component.x / this.q.w) + 1
   	const y = Math.floor(component.y / this.q.h) + 1
   	if (component._cx === x && component._cy === y) return
@@ -19,6 +28,7 @@ export default class Controller {
   	if (component._cx) {
   		delete this.quadrants[component._cy][component._cx][component.id]
   	}
+
   	this.quadrants[y][x][component.id] = component
 
   	component._cx = x
@@ -48,15 +58,10 @@ export default class Controller {
 
   collides(a, b) {
     if (b.id === a.id) return
+
     if (a.intersects(b)) {
-      if (b.constructor.name === 'Player') {
-        console.log("MOVE IT!")
-      }
-      else if (b.constructor.name === 'Bullet' && b.playerThatFired !== a.id) {
-        console.log("I'M HIT!!")
-        delete this.quadrants[b._cy][b._cx][b.id]
-        b.parent.removeChild(b)
-      } 
+      a.collide(b)
+      b.collide(a)
     }
   }
 

@@ -69,8 +69,14 @@ socket.on('client:fire', function (data) {
   if (!player.x) return
 
   let bullet = bulletStore.add(player.x, player.y, player.xVelocity, player.yVelocity, player.rotation, player.id)
+  collisionStore.add(bullet)
 
   player.fire(bullet)
+})
+
+// Any test events
+socket.on('client:test', function (data) {
+  console.log('TEST', data)
 })
 
 

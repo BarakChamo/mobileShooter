@@ -10,6 +10,7 @@ export default class Base {
 		this.id = Math.random().toString(36).substring(2,7)
 		this._maxListeners = DEFAULT_MAX_LISTENERS
 		this._events = {}
+		this.controllers = []
 	}
 	
 	on(type, listener) {
@@ -94,5 +95,9 @@ export default class Base {
 
 	mix(...args) {
 		arguments.forEach( mixin => Object.keys(mixin).forEach( prop => this[prop] = mixin[prop] ) )
+	}
+
+	remove() {  
+		this.controllers.forEach(controller => controller.removeChild(this))
 	}
 }

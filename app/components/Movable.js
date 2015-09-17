@@ -35,17 +35,4 @@ export default class Movable extends Base {
             this.y - this.r < b.y + (b.height || b.r * 2) &&
             this.y + this.r > b.y;
   }
-
-  // collides(shape) {
-  //   if (shape.id === this.id) return
-  //   if (this.intersects(shape)) {
-  //     if (shape.constructor.name === 'Player') {
-  //       console.log("MOVE IT!")
-  //     }
-  //     else if (shape.constructor.name === 'Bullet' && shape.playerThatFired !== this.id) {
-  //       console.log("I'M HIT!!")
-  //       shape.parent.removeChild(shape)
-  //     }
-  //   }
-  // }
 }

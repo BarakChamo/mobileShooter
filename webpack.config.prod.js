@@ -38,7 +38,7 @@ module.exports = [
                 {   // ES6 Loader
                     test: /\.jsx?$/, 
                     exclude: /(node_modules|bower_components)/, 
-                    loader: 'babel?optional[]=runtime'
+                    loader: 'babel?optional[]=runtime&stage=0'
                 },
 
                 {   // JADE Loader
@@ -130,7 +130,7 @@ module.exports = [
                 {   // ES6 Loader
                     test: /\.jsx?$/, 
                     exclude: /(node_modules|bower_components)/, 
-                    loader: 'babel?optional[]=runtime'
+                    loader: 'babel?optional[]=runtime&stage=0'
                 },
 
                 {   // JADE Loader

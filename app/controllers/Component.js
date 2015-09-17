@@ -6,7 +6,7 @@ export default class ComponentController {
 
 	add() {
 		var component = new this.component(...arguments)
-		component.parent = this
+		component.controllers.push(this)
 
 		this.components[component.id] = component
 

@@ -2,9 +2,11 @@ import WORLD       from '../constants/world'
 import {Circle}    from './Shapes'
 import Marker      from './Marker'
 import Orientation from '../controllers/Orientation'
+import { movable, collidable, kevin } from '../mixins'
 
-var maxDistance = Math.sqrt(Math.pow(WORLD.width, 2) + Math.pow(WORLD.height, 2))
+let maxDistance = Math.sqrt(Math.pow(WORLD.width, 2) + Math.pow(WORLD.height, 2))
 
+@movable @collidable @kevin({health: WORLD.player.damage})
 export default class Player extends Circle {
   constructor(x, y, id) {
     super(x, y, WORLD.player.radius, 'red');
@@ -12,6 +14,8 @@ export default class Player extends Circle {
     this.id = id
     this.controller = new Orientation();
     this.marker = new Marker(200, 200, 20, 3, 'blue')
+
+    this.health = WORLD.player.health
   }
 
   update(dt) {
@@ -43,6 +47,21 @@ export default class Player extends Circle {
   fire(bullet) {
     this.xVelocity -= bullet.xVelocity / 10
     this.yVelocity -= bullet.yVelocity / 10
+  }
+
+  collide(component) {
+    const a = component.action
+
+    if (component.playerThatFired === this.id) return
+    if (a.health) this.health += a.health
+
+    this.checkLife()
+  }
+
+  checkLife(){
+    if (this.health > 0) return
+
+    this.remove()
   }
 
   handleOrientation(event) {

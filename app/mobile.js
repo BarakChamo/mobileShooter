@@ -3,7 +3,6 @@ import 'styles/mobile.scss'
 // Dependencies
 import SocketIO from 'socket.io-client'
 
-
 // is on an inconsistent apple device?!?
 const ios = navigator.userAgent.match(/iPhone|iPad/)
 
@@ -17,62 +16,58 @@ let pole = false,
 // Set player id for reconnection
 window.localStorage.setItem('playerId', id)
 
-// Handle Events
+
+/*
+  Initialize socket connection
+*/ 
+
 socket.on('connect', function(){
   pole = false
   calibrated = false
   first = false
 
-  window.addEventListener('deviceorientation', updateOrientation);
 
-  window.addEventListener('orientationchange', function(data){
-    window.document.body.style.backgroundColor = 'blue'
-    socket.emit('device:orientation', data)
-  })
+  /*
+    Device event handlers
+  */ 
 
-  // window.addEventListener('devicemotion', updateMotion);
-
-  document.addEventListener('touchstart', faya);
-
+  window.addEventListener('deviceorientation', updateOrientation)
+  document.addEventListener('touchstart', faya)
 });
 
-// Throttle updates
+
+/*
+  Throttled movement handler
+*/ 
+
 let updateOrientation = _.throttle(function(event) {
-  if (!first) return first = true;
-  pole = calibrated ? pole : event.alpha;
-  calibrated = calibrated || true;
+  if (!first) return first = true
+  pole = calibrated ? pole : event.alpha
+  calibrated = calibrated || true
 
   socket.emit('device:position', {
     id: id,
     event: {
       alpha: (ios ? event.alpha : event.alpha - pole) % 360,
-      // alpha: event.alpha,
       beta:  event.beta,
       gamma: event.gamma
     },
     a: event.absolute
-  });
-}, 0);
+  })
+}, 0)
 
-// var updateMotion = _.throttle(function(event) {
-//   if (!first) return first = true;
-//   pole = calibrated ? pole : event.alpha;
-//   calibrated = calibrated || true;
+/*
+  Fire handler
+*/ 
 
-//   socket.emit('device:motion', {
-//     id: id,
-//     event: {
-//       alpha: (pole + event.alpha) % 360,
-//       alpha: event.acceleration.x,
-//       beta:  event.acceleration.y,
-//       gamma: event.acceleration.z
-//     }
-//   });
-// }, 0);
-
-let faya = function(){
-socket.emit('device:fire', {
-  id: id,
-  strength: 1
-});
+function faya() {
+  socket.emit('device:fire', {
+    id: id,
+    strength: 1
+  })
 }
+
+
+/*
+  Video handler
+*/ 

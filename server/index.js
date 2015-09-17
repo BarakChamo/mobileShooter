@@ -40,6 +40,10 @@ io.on('connection', function (socket) {
     io.sockets.emit('client:fire', data);
   });
 
+  socket.on('device:test', function(data){
+    io.sockets.emit('client:test', data);
+  });
+
   socket.on('disconnect', function(){
     // console.log('someone died');
   });
@@ -59,6 +63,6 @@ proxy.on('error', function(e) {
 });
 
 // And run the server
-server.listen(process.env.PORT || 3000, function () {
+server.listen(process.env.PORT || 3000, '0.0.0.0', function () {
   console.log('Server running on port ' + (process.env.PORT || 3000));
 });

@@ -8,6 +8,13 @@ export default {
 
   player: {
   	velocity: 2500.0,
-  	radius: 20
+  	radius: 20,
+    health: 1000,
+    damage: 0
+  },
+
+  bullet: {
+    damage: -100,
+    speed:  -750
   }
 }
