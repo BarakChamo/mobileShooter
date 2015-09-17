@@ -3,6 +3,7 @@ import 'styles/mobile.scss'
 // Dependencies
 import SocketIO from 'socket.io-client'
 
+
 // is on an inconsistent apple device?!?
 const ios = navigator.userAgent.match(/iPhone|iPad/)
 
@@ -15,7 +16,6 @@ let pole = false,
 
 // Set player id for reconnection
 window.localStorage.setItem('playerId', id)
-
 
 // Handle Events
 socket.on('connect', function(){
