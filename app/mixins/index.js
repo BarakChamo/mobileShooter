@@ -48,3 +48,14 @@ export function kevin(action) {
     target.prototype.action = action
   }
 }
+
+
+/*
+  Describe mixin
+*/ 
+
+export function describe(...keys) {
+  return function describe(target){
+    target.prototype._describe = keys
+  }
+}

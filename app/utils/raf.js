@@ -9,7 +9,7 @@ var time = 0;
  * @api private
  */
 function raf(fn) {
-  return window.requestAnimationFrame(function() {
+  return setTimeout(function() {
     var now = Date.now()
     var elapsed = now - time
 
@@ -21,7 +21,7 @@ function raf(fn) {
 
     time = now
     fn(elapsed)
-  })
+  }, 1000/60)
 }
 
 export default class Raf {

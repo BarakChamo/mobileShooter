@@ -2,11 +2,14 @@ import WORLD       from '../constants/world'
 import {Circle}    from './Shapes'
 import Marker      from './Marker'
 import Orientation from '../controllers/Orientation'
-import { movable, collidable, kevin } from '../mixins'
+import { movable, collidable, kevin, describe } from '../mixins'
 
 let maxDistance = Math.sqrt(Math.pow(WORLD.width, 2) + Math.pow(WORLD.height, 2))
 
-@movable @collidable @kevin({health: WORLD.player.damage})
+@movable 
+@collidable 
+@kevin({health: WORLD.player.damage})
+@describe('x', 'y', 'r', 'color', 'rotation')
 export default class Player extends Circle {
   constructor(x, y, id) {
     super(x, y, WORLD.player.radius, 'red');
@@ -17,6 +20,7 @@ export default class Player extends Circle {
 
     this.health = WORLD.player.health
   }
+  
 
   update(dt) {
     this.xVelocity = ((this.controller.x - this.x) / WORLD.width) * 2000
@@ -25,7 +29,7 @@ export default class Player extends Circle {
     this.rotation = this.controller.rotation
     this.move(this.xVelocity * dt, this.yVelocity * dt)
 
-    this.marker.update(this.controller.x, this.controller.y, this.rotation, dt)
+    // this.marker.update(this.controller.x, this.controller.y, this.rotation, dt)
 
     if (this.x > WORLD.width - this.r) {
       this.x = WORLD.width - this.r
@@ -70,6 +74,6 @@ export default class Player extends Circle {
 
   draw(ctx) {
     super.draw(ctx)
-    this.marker.draw(ctx)
+    // this.marker.draw(ctx)
   }
 }

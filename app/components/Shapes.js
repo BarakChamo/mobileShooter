@@ -1,12 +1,25 @@
 import WORLD   from '../constants/world'
 import Base    from './Base'
+import { describe } from '../mixins'
 
+@describe('x', 'y')
 class Shape extends Base {
   constructor(x, y, r, sides, color) {
     super(x, y)
 
     this.x = x
     this.y = y    
+  }
+
+  describe() {
+    let desc = {
+      type: this.constructor.name,
+      data: {}
+    }
+ 
+    this._describe.forEach(key => (desc.data[key] = this[key]))
+
+    return desc
   }
 }
 
@@ -68,6 +81,7 @@ export class Triangle extends Polygon {
   Rectangle
  */ 
 
+@describe('x', 'y', 'width', 'height', 'color')
 export class Rectangle extends Shape {
   constructor(x, y, width, height, color) {
     super(x, y);
@@ -76,6 +90,7 @@ export class Rectangle extends Shape {
     this.color = color;
   }
 
+  
   draw(ctx) {
     ctx.beginPath();
     ctx.rect(this.x, this.y, this.width, this.height);
@@ -90,12 +105,14 @@ export class Rectangle extends Shape {
   Circle
  */ 
 
+@describe('x', 'y', 'r', 'color')
 export class Circle extends Shape {
   constructor(x, y, r, color) {
     super(x, y);
     this.r = r;
     this.color = color;
   }
+  
 
   draw(ctx) {
     ctx.save();

@@ -33,13 +33,6 @@ export default class Controller {
     this.dxV = dxV
     this.dyV = dyV
 
-    document.getElementById('x').innerText = `X: ${Math.round(event.alpha, 2)} | ${Math.round(alpha, 2)} | ${Math.round(x, 2)}`
-    document.getElementById('y').innerText = `X: ${Math.round(event.beta, 2)} | ${Math.round(beta, 2)} | ${Math.round(y, 2)}`
-
-    document.getElementById('rotation').innerText = 'rotation: ' + gamma
-    document.getElementById('dxV').innerText = 'dxV: ' + dxV
-    document.getElementById('dyV').innerText = 'dyV: ' + dyV
-
     this.smooth()
   }
 
