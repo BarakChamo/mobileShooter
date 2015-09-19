@@ -39,6 +39,10 @@ socket.on('connect', function(){
 
 });
 
+socket.on('died', function() {
+  alert('you died')
+})
+
 
 /*
   Throttled movement handler

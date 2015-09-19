@@ -18,6 +18,9 @@ import KeyboardController  from './controllers/Keyboard'
 import ComponentController from './controllers/Component'
 import CollisionController from './controllers/Collision'
 
+// Managers
+import TriggerManager from './controllers/Triggers'
+
 
 /*
   Bootstrap
@@ -29,8 +32,10 @@ const socket = SocketIO.connect(self.location.host + '/console')
 let playerStore    = new ComponentController(Player)
 let bulletStore    = new ComponentController(Bullet)
 let collisionStore = new CollisionController(WORLD.player.radius * 5)
+let triggerManager = new TriggerManager(socket)
 
 playerStore.add(WORLD.width / 2, WORLD.height / 2, 'test')
+
 
 
 /*
@@ -53,6 +58,7 @@ onmessage = function(event){
 socket.on('client:connect', function(data) {
   if (!data.id) return
   let player = playerStore.add(WORLD.width / 2, WORLD.height / 2, data.id)
+  triggerManager.register(player, data.socketId)
 })
 
 // Client position update

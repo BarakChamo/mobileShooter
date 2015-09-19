@@ -41,7 +41,7 @@ var ctrl = io.of('/controller'),
 // Controller sockets events
 ctrl.on('connection', function(socket){
   // Controller handshake
-  cnsl.emit('client:connect', { id: socket.handshake.query.playerId })
+  cnsl.emit('client:connect', { id: socket.handshake.query.playerId, socketId: socket.id })
 
 
   /*
@@ -86,6 +86,10 @@ cnsl.on('connection', function(socket){
   socket.on('client:join', function(room, callback){
     socket.join(room)
     callback(room)
+  })
+
+  socket.on('client:event', function(data) {
+    ctrl.to(data.sid).emit(data.event, data.params)
   })
 })
 

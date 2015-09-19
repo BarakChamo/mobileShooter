@@ -65,6 +65,7 @@ export default class Player extends Circle {
   checkLife(){
     if (this.health > 0) return
 
+    this.trigger.send('died', this)
     this.remove()
   }
 
