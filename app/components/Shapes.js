@@ -127,19 +127,6 @@ export class Circle extends Shape {
     ctx.fill();
     ctx.stroke();
 
-    // Cross
-    ctx.beginPath();
-    ctx.rect(0 - this.r, 0, this.r * 2, 1);
-    ctx.fillStyle = 'black';
-    ctx.fill();
-    ctx.closePath();
-
-    ctx.beginPath();
-    ctx.rect(0, 0 - this.r * 2, 1, this.r * 3);
-    ctx.fillStyle = 'black';
-    ctx.fill();
-    ctx.closePath();
-
     ctx.restore();
   }
 }

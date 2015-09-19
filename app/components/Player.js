@@ -12,10 +12,10 @@ let maxDistance = Math.sqrt(Math.pow(WORLD.width, 2) + Math.pow(WORLD.height, 2)
 @describe('x', 'y', 'r', 'color', 'rotation')
 export default class Player extends Circle {
   constructor(x, y, id) {
-    super(x, y, WORLD.player.radius, 'red');
+    super(x, y, WORLD.player.radius, 'red')
 
     this.id = id
-    this.controller = new Orientation();
+    this.controller = new Orientation()
     this.marker = new Marker(200, 200, 20, 3, 'blue')
 
     this.health = WORLD.player.health
@@ -73,7 +73,33 @@ export default class Player extends Circle {
   }
 
   draw(ctx) {
+    // Ball
     super.draw(ctx)
+      
+      ctx.save()
+
+      ctx.translate(this.x, this.y)
+      ctx.rotate(this.rotation)
+
+      // Cross
+      ctx.beginPath()
+      ctx.rect(0 - this.r, 0, this.r * 2, 1)
+      ctx.fillStyle = 'black'
+      ctx.fill()
+      ctx.closePath()
+
+      ctx.beginPath()
+      ctx.rect(0, 0 - this.r * 2, 1, this.r * 3)
+      ctx.fillStyle = 'black'
+      ctx.fill()
+      ctx.closePath()
+
+      // ctx.font = (this.r * 2) + "pt Arial"
+      // ctx.fillText(String.fromCharCode(55357) + String.fromCharCode(56835), -this.r, this.r)
+
+    ctx.restore()
+    
+
     // this.marker.draw(ctx)
   }
 }

@@ -7,7 +7,7 @@ import SocketIO from 'socket.io-client'
 const ios = navigator.userAgent.match(/iPhone|iPad/)
 
 let id     = (window.localStorage.getItem('playerId') || Math.random().toString(36).substring(2,7)),
-    socket = SocketIO.connect(window.location.host,{query: 'playerId='+id})
+    socket = SocketIO.connect(window.location.host + '/controller',{query: 'playerId='+id})
 
 let pole = false,
     calibrated = false,
@@ -31,8 +31,12 @@ socket.on('connect', function(){
     Device event handlers
   */ 
 
-  window.addEventListener('deviceorientation', updateOrientation)
-  document.addEventListener('touchstart', faya)
+  // Join console room
+  socket.emit('device:join', (location.pathname.replace('/','') || prompt('What room?!?')).toLowerCase(), function(data){
+    window.addEventListener('deviceorientation', updateOrientation)
+    document.addEventListener('touchstart', faya)
+  })
+
 });
 
 
@@ -46,6 +50,7 @@ let updateOrientation = _.throttle(function(event) {
   calibrated = calibrated || true
 
   socket.emit('device:position', {
+    // room: ROOM_TEMP
     id: id,
     event: {
       alpha: (ios ? event.alpha : event.alpha - pole) % 360,
@@ -62,6 +67,7 @@ let updateOrientation = _.throttle(function(event) {
 
 function faya() {
   socket.emit('device:fire', {
+    // room: ROOM_TEMP
     id: id,
     strength: 1
   })

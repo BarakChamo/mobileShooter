@@ -20,6 +20,10 @@ import GameWorker from './worker.w'
 const ctx    = document.querySelector('#canvas').getContext('2d'),
       grid = new Grid(WORLD.player.radius * 5)
 
+// Configure canvas text
+ctx.textBaseline = "center";
+
+
 // Set canvas dimension
 setup.setDimensions(ctx)
 
@@ -58,3 +62,5 @@ worker.onmessage = function(event){
 worker.onerror = function(e){ 
   console.log(e)
 }
+
+worker.postMessage((location.pathname.replace('/','') || prompt('WHAT ROOM?!?!')).toLowerCase())

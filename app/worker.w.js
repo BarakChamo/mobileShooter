@@ -23,7 +23,7 @@ import CollisionController from './controllers/Collision'
   Bootstrap
  */ 
 
-const socket = SocketIO.connect(self.location.host)
+const socket = SocketIO.connect(self.location.host + '/console')
 
 // Initialize component managers
 let playerStore    = new ComponentController(Player)
@@ -34,6 +34,18 @@ playerStore.add(WORLD.width / 2, WORLD.height / 2, 'test')
 
 
 /*
+  Socket connection
+ */ 
+
+// Connect to room
+onmessage = function(event){
+  socket.emit('client:join', event.data, function(room){
+    console.log('CONNECTED TO:' + room)
+  })
+}
+
+
+/*
   Event Handlers
  */ 
 
@@ -41,22 +53,22 @@ playerStore.add(WORLD.width / 2, WORLD.height / 2, 'test')
 socket.on('client:connect', function(data) {
   if (!data.id) return
   let player = playerStore.add(WORLD.width / 2, WORLD.height / 2, data.id)
-});
+})
 
 // Client position update
 socket.on('client:position', function (data) {
   if (!data.event || !playerStore.getChild(data.id)) return
   playerStore.getChild(data.id).handleOrientation(data.event)
-});
+})
 
 // Client motion
 socket.on('client:motion', function (data) {
   //do nothing
-});
+})
 
 // Client fire event
 socket.on('client:fire', function (data) {
-  let player = playerStore.getChild(data.id);
+  let player = playerStore.getChild(data.id)
 
   if (!player.x) return
 
@@ -100,5 +112,5 @@ let raf = new Raf()
 let first
 raf.start(function(elapsed) {
   var state = update(elapsed)
-  postMessage(state, [state])
+  postMessage(state /*,[state]*/)
 })
