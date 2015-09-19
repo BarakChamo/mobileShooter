@@ -19,7 +19,7 @@ import ComponentController from './controllers/Component'
 import CollisionController from './controllers/Collision'
 
 // Managers
-import TriggerManager from './controllers/Triggers'
+import triggerManager from './controllers/Triggers'
 
 
 /*
@@ -32,7 +32,7 @@ const socket = SocketIO.connect(self.location.host + '/console')
 let playerStore    = new ComponentController(Player)
 let bulletStore    = new ComponentController(Bullet)
 let collisionStore = new CollisionController(WORLD.player.radius * 5)
-let triggerManager = new TriggerManager(socket)
+// let triggerManager = new TriggerManager(socket)
 
 playerStore.add(WORLD.width / 2, WORLD.height / 2, 'test')
 
@@ -45,9 +45,12 @@ playerStore.add(WORLD.width / 2, WORLD.height / 2, 'test')
 // Connect to room
 onmessage = function(event){
   socket.emit('client:join', event.data, function(room){
-    console.log('CONNECTED TO:' + room)
+    // console.log('CONNECTED TO:' + room)
   })
 }
+
+// Register socket instance with trigger manager
+triggerManager.initialize(socket)
 
 
 /*
@@ -57,13 +60,17 @@ onmessage = function(event){
 // Client connection
 socket.on('client:connect', function(data) {
   if (!data.id) return
+
   let player = playerStore.add(WORLD.width / 2, WORLD.height / 2, data.id)
+
   triggerManager.register(player, data.socketId)
+  collisionStore.add(player)
 })
 
 // Client position update
 socket.on('client:position', function (data) {
   if (!data.event || !playerStore.getChild(data.id)) return
+
   playerStore.getChild(data.id).handleOrientation(data.event)
 })
 
@@ -79,8 +86,8 @@ socket.on('client:fire', function (data) {
   if (!player.x) return
 
   let bullet = bulletStore.add(player.x, player.y, player.xVelocity, player.yVelocity, player.rotation, player.id)
+  
   collisionStore.add(bullet)
-
   player.fire(bullet)
 })
 

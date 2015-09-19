@@ -39,10 +39,6 @@ socket.on('connect', function(){
 
 });
 
-socket.on('died', function() {
-  alert('you died')
-})
-
 
 /*
   Throttled movement handler
@@ -79,5 +75,14 @@ function faya() {
 
 
 /*
-  Video handler
+  Game event handlers
 */ 
+
+socket.on('trigger:dead', function() {
+  navigator.vibrate && navigator.vibrate([200, 100, 200, 100, 200])
+  alert('you died')
+})
+
+socket.on('trigger:hit', function() {
+  navigator.vibrate && navigator.vibrate(100)
+})

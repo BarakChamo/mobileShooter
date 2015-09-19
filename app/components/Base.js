@@ -97,7 +97,7 @@ export default class Base {
 		arguments.forEach( mixin => Object.keys(mixin).forEach( prop => this[prop] = mixin[prop] ) )
 	}
 
-	remove() {  
+	remove() {
 		this.controllers.forEach(controller => controller.removeChild(this))
 	}
 }

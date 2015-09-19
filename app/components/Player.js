@@ -2,6 +2,8 @@ import WORLD       from '../constants/world'
 import {Circle}    from './Shapes'
 import Marker      from './Marker'
 import Orientation from '../controllers/Orientation'
+import Triggers    from '../controllers/Triggers'
+
 import { movable, collidable, kevin, describe } from '../mixins'
 
 let maxDistance = Math.sqrt(Math.pow(WORLD.width, 2) + Math.pow(WORLD.height, 2))
@@ -63,9 +65,9 @@ export default class Player extends Circle {
   }
 
   checkLife(){
-    if (this.health > 0) return
+    if (this.health > 0) return Triggers.trigger('hit', this)
 
-    this.trigger.send('died', this)
+    Triggers.trigger('dead', this)
     this.remove()
   }
 
