@@ -24,7 +24,7 @@ window.localStorage.setItem('playerId', id)
   Load sounds
 */ 
 
-sounds.load('pew',   'sounds/pew.mp3')
+sounds.load('pew',   'sounds/pew.wav')
 sounds.load('lazar', 'sounds/lazar.mp3')
 sounds.load('sad',   'sounds/sad.mp3')
 
@@ -95,7 +95,7 @@ function faya() {
 socket.on('trigger:dead', function() {
   sounds.play('sad')
   // navigator.vibrate && navigator.vibrate([200, 100, 200, 100, 200])
-  // alert('you died')
+  alert('you died')
 })
 
 socket.on('trigger:hit', function() {

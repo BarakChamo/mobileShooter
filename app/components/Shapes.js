@@ -17,7 +17,7 @@ class Shape extends Base {
       data: {}
     }
  
-    this._describe.forEach(key => (desc.data[key] = this[key]))
+    this._describe.forEach(key => (desc.data[key] = this[key] instanceof Shape ? this[key].describe() : this[key]) )
 
     return desc
   }
@@ -27,6 +27,7 @@ class Shape extends Base {
   Rectangle
  */ 
 
+@describe('x', 'y', 'r', 'sides', 'color', 'rotation')
 export class Polygon extends Shape {
   constructor(x, y, r, sides, color) {
     super(x, y)
@@ -40,20 +41,20 @@ export class Polygon extends Shape {
     this.color = color
   }
 
-  draw(ctx) {
-    if (this.sides < 3) return;
+  draw(ctx, params) {
+    if (params.sides < 3) return;
 
-    var a = (Math.PI * 2)/this.sides;
+    var a = (Math.PI * 2)/params.sides;
 
     ctx.save()
-    ctx.translate(this.x, this.y)
-    ctx.rotate(this.rotation)
+    ctx.translate(params.x, params.y)
+    ctx.rotate(params.rotation)
 
     ctx.beginPath();
-    ctx.moveTo(this.r,0)
+    ctx.moveTo(params.r,0)
 
-    for (var i = 1; i < this.sides; i++) {
-      ctx.lineTo(this.r*Math.cos(a*i),this.r*Math.sin(a*i))
+    for (var i = 1; i < params.sides; i++) {
+      ctx.lineTo(params.r*Math.cos(a*i),params.r*Math.sin(a*i))
     }
 
     ctx.closePath()
@@ -91,10 +92,10 @@ export class Rectangle extends Shape {
   }
 
   
-  draw(ctx) {
+  draw(ctx, params) {
     ctx.beginPath();
-    ctx.rect(this.x, this.y, this.width, this.height);
-    ctx.fillStyle = this.color;
+    ctx.rect(params.x, params.y, params.width, params.height);
+    ctx.fillStyle = params.color;
     ctx.fill();
     ctx.closePath();
   }
@@ -114,16 +115,16 @@ export class Circle extends Shape {
   }
   
 
-  draw(ctx) {
+  draw(ctx, params) {
     ctx.save();
 
-    ctx.translate(this.x, this.y);
-    ctx.rotate(this.rotation);
+    ctx.translate(params.x, params.y);
+    ctx.rotate(params.rotation);
 
     // Ball
     ctx.beginPath();
-    ctx.arc(0, 0, this.r, 0, 2*Math.PI);
-    ctx.fillStyle = this.color;
+    ctx.arc(0, 0, params.r, 0, 2*Math.PI);
+    ctx.fillStyle = params.color;
     ctx.fill();
     ctx.stroke();
 

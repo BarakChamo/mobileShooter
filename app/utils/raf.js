@@ -21,7 +21,7 @@ function raf(fn) {
 
     time = now
     fn(elapsed)
-  }, 1000/60)
+  }, 1000/29)
 }
 
 export default class Raf {

@@ -11,7 +11,7 @@ let maxDistance = Math.sqrt(Math.pow(WORLD.width, 2) + Math.pow(WORLD.height, 2)
 @movable 
 @collidable 
 @kevin({health: WORLD.player.damage})
-@describe('x', 'y', 'r', 'color', 'rotation')
+@describe('x', 'y', 'r', 'color', 'rotation', 'marker')
 export default class Player extends Circle {
   constructor(x, y, id) {
     super(x, y, WORLD.player.radius, 'red')
@@ -31,7 +31,7 @@ export default class Player extends Circle {
     this.rotation = this.controller.rotation
     this.move(this.xVelocity * dt, this.yVelocity * dt)
 
-    // this.marker.update(this.controller.x, this.controller.y, this.rotation, dt)
+    this.marker.update(this.controller.x, this.controller.y, this.rotation, dt)
 
     if (this.x > WORLD.width - this.r) {
       this.x = WORLD.width - this.r
@@ -75,34 +75,33 @@ export default class Player extends Circle {
     this.controller.handleOrientation(event)
   }
 
-  draw(ctx) {
+  draw(ctx, params) {
     // Ball
-    super.draw(ctx)
+    super.draw(ctx, params)
       
       ctx.save()
 
-      ctx.translate(this.x, this.y)
-      ctx.rotate(this.rotation)
+      ctx.translate(params.x, params.y)
+      ctx.rotate(params.rotation)
 
       // Cross
       ctx.beginPath()
-      ctx.rect(0 - this.r, 0, this.r * 2, 1)
+      ctx.rect(0 - params.r, 0, params.r * 2, 1)
       ctx.fillStyle = 'black'
       ctx.fill()
       ctx.closePath()
 
       ctx.beginPath()
-      ctx.rect(0, 0 - this.r * 2, 1, this.r * 3)
+      ctx.rect(0, 0 - params.r * 2, 1, params.r * 3)
       ctx.fillStyle = 'black'
       ctx.fill()
       ctx.closePath()
 
-      // ctx.font = (this.r * 2) + "pt Arial"
-      // ctx.fillText(String.fromCharCode(55357) + String.fromCharCode(56835), -this.r, this.r)
+      // ctx.font = (params.r * 2) + "pt Arial"
+      // ctx.fillText(String.fromCharCode(55357) + String.fromCharCode(56835), -params.r, params.r)
 
     ctx.restore()
-    
 
-    // this.marker.draw(ctx)
+    Marker.prototype.draw(ctx, params.marker.data)
   }
 }

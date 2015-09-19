@@ -46,7 +46,7 @@ function render(gameState) {
 
   grid.draw(ctx)
 
-  gameState.forEach(s => renderers[s.type].call(s.data, ctx))
+  gameState.forEach(s => renderers[s.type](ctx, s.data))
 
   // playerStore.runOnAll((player, i) => player.draw(ctx))
   // bulletStore.runOnAll((bullet, i) => bullet.draw(ctx))

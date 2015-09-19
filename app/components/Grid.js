@@ -21,6 +21,6 @@ export default class Grid {
 	}
 
 	draw(ctx) {
-		this.grid.forEach(elem => elem.draw(ctx))
+		this.grid.forEach(elem => elem.draw(ctx, elem.describe().data))
 	}
 }
