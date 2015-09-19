@@ -3,6 +3,9 @@ import 'styles/mobile.scss'
 // Dependencies
 import SocketIO from 'socket.io-client'
 
+// Controllers
+import sounds from './controllers/Sound'
+
 // is on an inconsistent apple device?!?
 const ios = navigator.userAgent.match(/iPhone|iPad/)
 
@@ -15,6 +18,15 @@ let pole = false,
 
 // Set player id for reconnection
 window.localStorage.setItem('playerId', id)
+
+
+/*
+  Load sounds
+*/ 
+
+sounds.load('pew',   'sounds/pew.mp3')
+sounds.load('lazar', 'sounds/lazar.mp3')
+sounds.load('sad',   'sounds/sad.mp3')
 
 
 /*
@@ -66,6 +78,8 @@ let updateOrientation = _.throttle(function(event) {
 */ 
 
 function faya() {
+  sounds.play('pew')
+
   socket.emit('device:fire', {
     // room: ROOM_TEMP
     id: id,
@@ -79,10 +93,11 @@ function faya() {
 */ 
 
 socket.on('trigger:dead', function() {
-  navigator.vibrate && navigator.vibrate([200, 100, 200, 100, 200])
-  alert('you died')
+  sounds.play('sad')
+  // navigator.vibrate && navigator.vibrate([200, 100, 200, 100, 200])
+  // alert('you died')
 })
 
 socket.on('trigger:hit', function() {
-  navigator.vibrate && navigator.vibrate(100)
+  // navigator.vibrate && navigator.vibrate(100)
 })
