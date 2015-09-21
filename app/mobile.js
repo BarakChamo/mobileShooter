@@ -8,6 +8,9 @@ import SocketIO from 'socket.io-client'
 // Controllers
 import sounds from './controllers/Sound'
 
+// Graphics
+import clouds from './graphics/clouds'
+
 import WORLD  from './constants/world'
 
 // is on an inconsistent apple device?!?
@@ -129,3 +132,8 @@ health.draw(ctx, health)
 
 
 
+/*
+  Cloud background
+*/ 
+
+clouds(document.querySelector('#clouds').getContext('2d'))
