@@ -23,15 +23,32 @@ export default class Controller {
     var x = this.scaleValue(alpha, 0, WORLD.width, -200, -160)
     var y = this.scaleValue(beta, 0, WORLD.height, -40, 10)
 
-    var dxV = this.scaleValue(alpha, -2, 2, -200, -160);
-    var dyV = this.scaleValue(beta, -2, 2, -40, -20);
+    // var dxV = this.scaleValue(alpha, -2, 2, -200, -160)
+    // var dyV = this.scaleValue(beta, -2, 2, -40, -20)
+
+    // this.dxV = dxV
+    // this.dyV = dyV
 
     this.x = x
     this.y = y
-    this.rotation = gamma * Math.PI / 180
 
-    this.dxV = dxV
-    this.dyV = dyV
+    if (this.x > WORLD.width) {
+      this.x = WORLD.width
+    }
+
+    if (this.x < 0) {
+      this.x = 0
+    }
+
+    if (this.y < 0) {
+      this.y = 0
+    }
+
+    if (this.y > WORLD.height) {
+      this.y = WORLD.height
+    }
+
+    this.rotation = gamma * Math.PI / 180
 
     this.smooth()
   }

@@ -1,4 +1,6 @@
 import 'styles/mobile.scss'
+// import './utils/fulltilt'
+// import './utils/gyro'
 
 // Dependencies
 import SocketIO from 'socket.io-client'
@@ -61,17 +63,19 @@ let updateOrientation = _.throttle(function(event) {
   pole = calibrated ? pole : event.alpha
   calibrated = calibrated || true
 
+  document.getElementById('a').innerText =  event.absolute
+
   socket.emit('device:position', {
     // room: ROOM_TEMP
     id: id,
-    event: {
-      alpha: (ios ? event.alpha : event.alpha - pole) % 360,
+    event:  {
+      alpha: ios ? event.alpha : Math.abs(360 + event.alpha - pole) % 360,
       beta:  event.beta,
       gamma: event.gamma
     },
     a: event.absolute
   })
-}, 0)
+}, 10)
 
 /*
   Fire handler
