@@ -4,18 +4,13 @@ export default class ComponentController {
 		this.components = {}
 	}
 
-	_add(instance) {
+	add(instance) {
+		let component = instance instanceof this.component ? instance : new this.component(...arguments)
+		
+		component.controllers.push(this)
+		this.components[component.id] = component
 
-		instance.controllers.push(this)
-
-		this.components[instance.id] = instance
-
-		return instance
-	}
-
-	add() {
-		let component = new this.component(...arguments)
-		return this._add(component)
+		return component
 	}
 
 	remove() {

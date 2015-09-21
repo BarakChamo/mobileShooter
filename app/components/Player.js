@@ -97,8 +97,8 @@ export default class Player extends Circle {
       ctx.fill()
       ctx.closePath()
 
-      // ctx.font = (params.r * 2) + "pt Arial"
-      // ctx.fillText(String.fromCharCode(55357) + String.fromCharCode(56835), -params.r, params.r)
+      ctx.font = (params.r * 2) + "pt Arial"
+      ctx.fillText('🌝', -params.r, params.r)
 
     ctx.restore()
 

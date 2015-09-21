@@ -23,7 +23,6 @@ const ctx    = document.querySelector('#canvas').getContext('2d'),
 // Configure canvas text
 ctx.textBaseline = "center";
 
-
 // Set canvas dimension
 setup.setDimensions(ctx)
 
