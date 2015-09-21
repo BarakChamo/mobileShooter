@@ -1,3 +1,5 @@
+import WORLD from '../constants/world'
+
 // Holds last iteration timestamp.
 var time = 0;
 
@@ -21,7 +23,7 @@ function raf(fn) {
 
     time = now
     fn(elapsed)
-  }, 1000/60)
+  }, 1000/WORLD.framerate)
 }
 
 export default class Raf {
