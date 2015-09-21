@@ -35,6 +35,12 @@ module.exports = [
         // Define module loaders
         module: {
             loaders: [
+                {   // Worker Loader
+                    test: /\.w\.jsx?$/, 
+                    exclude: /(node_modules|bower_components)/, 
+                    loader: 'webworker!babel?optional[]=runtime&stage=0'
+                },
+
                 {   // ES6 Loader
                     test: /\.jsx?$/, 
                     exclude: /(node_modules|bower_components)/, 
@@ -84,6 +90,9 @@ module.exports = [
                 '$': 'jquery'
             }),
 
+            // Optimize occurance
+            new webpack.optimize.OccurenceOrderPlugin(),
+
             // Deduplication
             new webpack.optimize.DedupePlugin(),
 
@@ -93,6 +102,12 @@ module.exports = [
 
             // Extract CSS files
             new ExtractTextPlugin("desktop.css"),
+
+            // Safe minification
+            new webpack.optimize.UglifyJsPlugin({
+                mangle: false,
+                minimize: true
+            })
         ]
     },
     {
@@ -127,6 +142,12 @@ module.exports = [
         // Define module loaders
         module: {
             loaders: [
+                {   // Worker Loader
+                    test: /\.w\.jsx?$/, 
+                    exclude: /(node_modules|bower_components)/, 
+                    loader: 'webworker!babel?optional[]=runtime&stage=0'
+                },
+
                 {   // ES6 Loader
                     test: /\.jsx?$/, 
                     exclude: /(node_modules|bower_components)/, 
@@ -176,6 +197,9 @@ module.exports = [
                 '$': 'jquery'
             }),
 
+            // Optimize occurance
+            new webpack.optimize.OccurenceOrderPlugin(),
+
             // Deduplication
             new webpack.optimize.DedupePlugin(),
 
@@ -185,6 +209,12 @@ module.exports = [
 
             // Extract CSS files
             new ExtractTextPlugin("mobile.css"),
+
+            // Safe minification
+            new webpack.optimize.UglifyJsPlugin({
+                mangle: false,
+                minimize: true
+            })
         ]
     }
 ];

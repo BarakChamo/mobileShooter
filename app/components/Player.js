@@ -6,7 +6,7 @@ import Orientation from '../controllers/Orientation'
 
 import { movable, collidable, kevin, describe } from '../mixins'
 
-let maxDistance = Math.sqrt(Math.pow(WORLD.width, 2) + Math.pow(WORLD.height, 2))
+// let maxDistance = Math.sqrt(Math.pow(WORLD.width, 2) + Math.pow(WORLD.height, 2))
 
 @movable 
 @collidable 
