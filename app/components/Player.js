@@ -1,5 +1,5 @@
 import WORLD       from '../constants/world'
-import {Circle}    from './Shapes'
+import {Circle, Arc}    from './Shapes'
 import Marker      from './Marker'
 import Orientation from '../controllers/Orientation'
 import Triggers    from '../controllers/Triggers'
@@ -11,7 +11,7 @@ let maxDistance = Math.sqrt(Math.pow(WORLD.width, 2) + Math.pow(WORLD.height, 2)
 @movable 
 @collidable 
 @kevin({health: WORLD.player.damage})
-@describe('x', 'y', 'r', 'color', 'rotation', 'marker')
+@describe('x', 'y', 'r', 'color', 'rotation', 'marker', 'health')
 export default class Player extends Circle {
   constructor(x, y, id) {
     super(x, y, WORLD.player.radius, 'red')
@@ -102,6 +102,8 @@ export default class Player extends Circle {
 
     ctx.restore()
 
+
+    Arc.prototype.draw(ctx, Object.assign(params, {startAngle: -0.5,endAngle: params.health / WORLD.player.health * 2, color:'blue', r: params.r + 7}))
     Marker.prototype.draw(ctx, params.marker.data)
   }
 }

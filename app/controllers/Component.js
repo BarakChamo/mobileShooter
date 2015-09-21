@@ -1,16 +1,21 @@
 export default class ComponentController {
-	constructor(Component, initial) {
+	constructor(Component) {
 		this.component = Component
 		this.components = {}
 	}
 
+	_add(instance) {
+
+		instance.controllers.push(this)
+
+		this.components[instance.id] = instance
+
+		return instance
+	}
+
 	add() {
-		var component = new this.component(...arguments)
-		component.controllers.push(this)
-
-		this.components[component.id] = component
-
-		return component
+		let component = new this.component(...arguments)
+		return this._add(component)
 	}
 
 	remove() {
@@ -18,7 +23,7 @@ export default class ComponentController {
 	}
 
 	removeChild(child) {
-		var id = child.id
+		let id = child.id
 		this.components[id] = null
 		delete this.components[id]
 	}
@@ -44,7 +49,7 @@ export default class ComponentController {
 	}
 
 	runOnAll(fn) {
-		for (var id in this.components) {
+		for (let id in this.components) {
 			fn(this.components[id])
 		}
 	}

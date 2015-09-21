@@ -4,7 +4,7 @@ import { describe } from '../mixins'
 
 @describe('x', 'y')
 class Shape extends Base {
-  constructor(x, y, r, sides, color) {
+  constructor(x, y) {
     super(x, y)
 
     this.x = x
@@ -98,6 +98,33 @@ export class Rectangle extends Shape {
     ctx.fillStyle = params.color;
     ctx.fill();
     ctx.closePath();
+  }
+}
+
+@describe('x', 'y', 'r', 'color')
+export class Arc {
+  constructor(x, y, r, startAngle, endAngle, color) {
+    this.x = x
+    this.y = y
+    this.r = r
+    this.color = color
+    this.startAngle = startAngle
+    this.endAngle = endAngle
+  }
+
+  draw(ctx, params) {
+    ctx.save()
+
+    ctx.translate(params.x, params.y)
+    ctx.rotate(params.rotation)
+
+    ctx.beginPath()
+    ctx.arc(0, 0, params.r, params.startAngle * Math.PI, (params.startAngle + params.endAngle) * Math.PI)
+    ctx.strokeStyle = 'black'
+    ctx.lineWidth = 2
+    ctx.stroke()
+
+    ctx.restore()
   }
 }
 
