@@ -1,8 +1,8 @@
 import WORLD       from '../constants/world'
 import {Circle, Arc}    from './Shapes'
 import Marker      from './Marker'
-import Orientation from '../controllers/Orientation'
 import Triggers    from '../controllers/Triggers'
+import Orientation from '../controllers/Orientation'
 
 import { movable, collidable, kevin, describe } from '../mixins'
 
