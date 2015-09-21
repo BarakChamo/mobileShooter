@@ -42,15 +42,15 @@ export class Polygon extends Shape {
   }
 
   draw(ctx, params) {
-    if (params.sides < 3) return;
+    if (params.sides < 3) return
 
-    var a = (Math.PI * 2)/params.sides;
+    var a = (Math.PI * 2)/params.sides
 
     ctx.save()
     ctx.translate(params.x, params.y)
     ctx.rotate(params.rotation)
 
-    ctx.beginPath();
+    ctx.beginPath()
     ctx.moveTo(params.r,0)
 
     for (var i = 1; i < params.sides; i++) {
@@ -68,12 +68,12 @@ export class Polygon extends Shape {
 }
 
 /*
-  Rectangle
+  Triangle
  */ 
 
 export class Triangle extends Polygon {
   constructor(x, y, color) {
-    super([[x, y],[x + 50, y],[x + 25, y - 50]], color);
+    super([[x, y],[x + 50, y],[x + 25, y - 50]], color)
   }
 }
 
@@ -85,19 +85,19 @@ export class Triangle extends Polygon {
 @describe('x', 'y', 'width', 'height', 'color')
 export class Rectangle extends Shape {
   constructor(x, y, width, height, color) {
-    super(x, y);
-    this.width = width;
-    this.height = height;
-    this.color = color;
+    super(x, y)
+    this.width = width
+    this.height = height
+    this.color = color
   }
 
   
   draw(ctx, params) {
-    ctx.beginPath();
-    ctx.rect(params.x, params.y, params.width, params.height);
-    ctx.fillStyle = params.color;
-    ctx.fill();
-    ctx.closePath();
+    ctx.beginPath()
+    ctx.rect(params.x, params.y, params.width, params.height)
+    ctx.fillStyle = params.color
+    ctx.fill()
+    ctx.closePath()
   }
 }
 
@@ -120,8 +120,8 @@ export class Arc {
 
     ctx.beginPath()
     ctx.arc(0, 0, params.r, params.startAngle * Math.PI, (params.startAngle + params.endAngle) * Math.PI)
-    ctx.strokeStyle = 'black'
-    ctx.lineWidth = 2
+    ctx.strokeStyle = params.color
+    ctx.lineWidth = 3.5
     ctx.stroke()
 
     ctx.restore()
@@ -136,25 +136,25 @@ export class Arc {
 @describe('x', 'y', 'r', 'color')
 export class Circle extends Shape {
   constructor(x, y, r, color) {
-    super(x, y);
-    this.r = r;
-    this.color = color;
+    super(x, y)
+    this.r = r
+    this.color = color
   }
   
 
   draw(ctx, params) {
-    ctx.save();
+    ctx.save()
 
-    ctx.translate(params.x, params.y);
-    ctx.rotate(params.rotation);
+    ctx.translate(params.x, params.y)
+    ctx.rotate(params.rotation)
 
     // Ball
-    ctx.beginPath();
-    ctx.arc(0, 0, params.r, 0, 2*Math.PI);
-    ctx.fillStyle = params.color;
-    ctx.fill();
-    ctx.stroke();
+    ctx.beginPath()
+    ctx.arc(0, 0, params.r, 0, 2*Math.PI)
+    ctx.fillStyle = params.color
+    ctx.fill()
+    ctx.stroke()
 
-    ctx.restore();
+    ctx.restore()
   }
 }

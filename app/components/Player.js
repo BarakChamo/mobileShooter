@@ -97,12 +97,13 @@ export default class Player extends Circle {
       ctx.closePath()
 
       ctx.font = (params.r * 2) + "pt Arial"
-      ctx.fillText('🌝', -params.r, params.r)
+      // ctx.fillText('🌝', -params.r, params.r)
 
     ctx.restore()
 
 
-    Arc.prototype.draw(ctx, Object.assign(params, {startAngle: -0.5,endAngle: params.health / WORLD.player.health * 2, color:'blue', r: params.r + 7}))
+    Arc.prototype.draw(ctx, Object.assign(params, {startAngle: -0.5,endAngle: params.health / WORLD.player.health * 2, color:'rgba(255,255,255,0.4)', r: params.r + 7}))
+
     Marker.prototype.draw(ctx, params.marker.data)
   }
 }

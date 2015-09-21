@@ -15,7 +15,7 @@ import Grid   from './components/Grid'
 import GameWorker  from './workers/game.w'
 
 // Graphics
-import clouds from './clouds'
+import clouds from './graphics/clouds'
 
 /*
   Bootstrap
@@ -23,7 +23,7 @@ import clouds from './clouds'
 
 const ctx      = document.querySelector('#canvas').getContext('2d'),
       cloudCtx = document.querySelector('#clouds').getContext('2d'),
-      grid     = new Grid(WORLD.player.radius * 5)
+      grid     = new Grid(WORLD.width / 20)
 
 // Configure canvas text
 ctx.textBaseline = 'center';
@@ -37,20 +37,10 @@ function render(gameState) {
   // Clear canvas
   ctx.clearRect(0, 0, WORLD.width, WORLD.height)
 
-  ctx.beginPath()
-    ctx.rect(WORLD.width/2, 0, 1, WORLD.height)
-    ctx.fillStyle = 'black'
-    ctx.fill()
-  ctx.closePath()
+  // Draw Grid
+  grid.draw(ctx)
 
-  ctx.beginPath()
-    ctx.rect(0, WORLD.height/2, WORLD.width, 1)
-    ctx.fillStyle = 'black'
-    ctx.fill()
-  ctx.closePath()
-
-  // grid.draw(ctx)
-
+  // Draw state
   gameState.forEach(s => renderers[s.type](ctx, s.data))
 }
 
