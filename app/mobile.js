@@ -8,6 +8,8 @@ import SocketIO from 'socket.io-client'
 // Controllers
 import sounds from './controllers/Sound'
 
+import WORLD  from './constants/world'
+
 // is on an inconsistent apple device?!?
 const ios = navigator.userAgent.match(/iPhone|iPad/)
 
@@ -63,7 +65,7 @@ let updateOrientation = _.throttle(function(event) {
   pole = calibrated ? pole : event.alpha
   calibrated = calibrated || true
 
-  document.getElementById('a').innerText =  event.absolute
+  // document.getElementById('a').innerText =  event.absolute
 
   socket.emit('device:position', {
     // room: ROOM_TEMP
@@ -102,6 +104,28 @@ socket.on('trigger:dead', function() {
   alert('you died')
 })
 
-socket.on('trigger:hit', function() {
-  // navigator.vibrate && navigator.vibrate(100)
+socket.on('trigger:hit', function(params) {
+  health.endAngle = params[0].health / WORLD.player.health * 2
+  ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
+  health.draw(ctx, health)
 })
+
+
+
+/*
+  Animation for the HUD
+*/
+
+import { Arc } from './components/Shapes'
+
+const ctx = document.getElementById('hud').getContext('2d')
+
+ctx.canvas.height = window.innerHeight
+ctx.canvas.width = window.innerWidth
+
+const health = new Arc(window.innerWidth / 2, window.innerHeight / 2, 100, -0.5, 2, 'black')
+
+health.draw(ctx, health)
+
+
+
