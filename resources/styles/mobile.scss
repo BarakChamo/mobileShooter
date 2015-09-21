@@ -1,7 +1,10 @@
 // @import "bootstrap";
 
+$color-background: #ffffff;
+$color-logo: #ce4233;
+
 body {
-  background-color: red;
+  background-color: $color-background;
   // display: table-row;
   vertical-align: middle;
   color: white;
@@ -17,3 +20,43 @@ span {
   vertical-align: middle;
 }
 
+/* http://codepen.io/majci23/pen/NqdXvy */
+.logo {
+  width: 250px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font-family: helvetica, arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: 900;
+  color: $color-logo;
+  letter-spacing: 0.2em;
+  
+  &::before, &::after {
+    content: "";
+    display: block;
+    width: 15px;
+    height: 15px;
+    background: $color-logo;
+    position: absolute;
+    animation: load .8s infinite alternate ease-in-out;
+  }
+  
+  &::before {
+    top: 0;
+  }
+  
+  &::after {
+    bottom: 0;
+  }
+}
+
+@keyframes load {
+  0% { left: 0; height: 30px; width: 15px }
+  50% { height: 8px; width: 40px }
+  100% { left: 235px; height: 30px; width: 15px}
+}

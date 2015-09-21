@@ -64,7 +64,7 @@ export default class Player extends Circle {
   }
 
   checkLife(){
-    if (this.health > 0) return Triggers.trigger('hit', this)
+    if (this.health > 0) return Triggers.trigger('hit', this, {health: this.health})
 
     Triggers.trigger('dead', this)
     this.remove()
