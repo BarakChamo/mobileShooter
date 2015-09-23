@@ -1,6 +1,6 @@
 import {Circle, Polygon}    from './Shapes'
-import WORLD       from '../constants/world'
-import { movable } from '../mixins'
+import WORLD       from 'constants/world'
+import { movable } from 'mixins'
 
 @movable
 export default class Marker extends Circle {

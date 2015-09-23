@@ -2,27 +2,27 @@
 import SocketIO from 'socket.io-client'
 
 // Utilities
-import Raf   from '../utils/raf'
-import setup from '../utils/setup'
+import Raf   from 'utils/raf'
+import setup from 'utils/setup'
 
 // Constants
-import WORLD from '../constants/world'
+import WORLD from 'constants/world'
 
 // Components
-import Player from '../components/Player'
-import Bullet from '../components/Bullet'
-import Grid   from '../components/Grid'
-import Drop   from '../components/Drop'
+import Player from 'components/Player'
+import Bullet from 'components/Bullet'
+import Grid   from 'components/Grid'
+import Drop   from 'components/Drop'
 
 
 // Controllers
-import KeyboardController  from '../controllers/Keyboard'
-import ComponentController from '../controllers/Component'
-import CollisionController from '../controllers/Collision'
-import Chaos               from '../controllers/Chaos'
+import KeyboardController  from 'controllers/Keyboard'
+import ComponentController from 'controllers/Component'
+import CollisionController from 'controllers/Collision'
+import Chaos               from 'controllers/Chaos'
 
 // Managers
-import triggerManager from '../controllers/Triggers'
+import triggerManager from 'controllers/Triggers'
 
 
 /*

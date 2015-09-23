@@ -1,4 +1,4 @@
-import WORLD from '../constants/world'
+import WORLD from 'constants/world'
 
 // Holds last iteration timestamp.
 var time = 0;

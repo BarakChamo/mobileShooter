@@ -6,12 +6,12 @@ import 'styles/mobile.scss'
 import SocketIO from 'socket.io-client'
 
 // Controllers
-import sounds from './controllers/Sound'
+import sounds from 'controllers/Sound'
 
 // Graphics
-import clouds from './graphics/clouds'
+import clouds from 'graphics/clouds'
 
-import WORLD  from './constants/world'
+import WORLD  from 'constants/world'
 
 // is on an inconsistent apple device?!?
 const ios = navigator.userAgent.match(/iPhone|iPad/)
@@ -86,7 +86,7 @@ let updateOrientation = _.throttle(function(event) {
   Fire handler
 */ 
 
-function faya() {
+let faya = _.throttle(function() {
   sounds.play('pew')
 
   socket.emit('device:fire', {
@@ -94,7 +94,7 @@ function faya() {
     id: id,
     strength: 1
   })
-}
+}, 10)
 
 
 /*

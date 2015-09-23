@@ -1,4 +1,4 @@
-import WORLD from '../constants/world'
+import WORLD from 'constants/world'
 
 export default {
 	setDimensions: function(canvas, ctx) {

@@ -1,5 +1,5 @@
 import Base  from './Base'
-import WORLD from '../constants/world'
+import WORLD from 'constants/world'
 
 /*
   Movable

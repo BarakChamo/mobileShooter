@@ -1,4 +1,4 @@
-import WORLD from '../constants/world'
+import WORLD from 'constants/world'
 import mixin from './mixin'
 
 /*
@@ -57,5 +57,25 @@ export function kevin(action) {
 export function describe(...keys) {
   return function describe(target){
     target.prototype._describe = keys
+  }
+}
+
+
+/*
+  Glow mixin
+*/ 
+
+export function glow(color, blur = 10) {
+  return function glow(target) {
+    const draw = target.prototype.draw
+
+    target.prototype.draw = function(ctx, params) {
+      ctx.save()
+        ctx.shadowBlur = blur
+        ctx.shadowColor = color || this.color || 'white'
+
+        draw.call(this, ctx, params)
+      ctx.restore()
+    }
   }
 }

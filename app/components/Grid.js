@@ -1,17 +1,8 @@
-import {Rectangle} from './Shapes'
-import WORLD from "../constants/world"
+import { Rectangle } from './Shapes'
+import { glow } from 'mixins'
+import WORLD from 'constants/world'
 
-class GridRectangle extends Rectangle {
-	draw(ctx, params) {
-    ctx.beginPath()
-	    ctx.rect(params.x, params.y, params.width, params.height)
-	    ctx.strokeStyle = 'rgba(255,255,255,0.1)'
-	    ctx.lineWidth = 3
-	    ctx.stroke()
-    ctx.closePath()
-	}
-}
-
+@glow('white', 10)
 export default class Grid {
 	constructor(r) {
 		this.x = WORLD.width  / r
@@ -19,19 +10,27 @@ export default class Grid {
 		
 		this.w = r
 		this.h = r
-		
-		this.grid = (function(nx, ny) {
-			let array = []
-			for (let x = 0; x < nx; x++) {
-				for (let y = 0; y < ny; y++) {
-					array.push(new GridRectangle(this.w * x, this.h * y, this.w, this.h))
-				}
-			}
-			return array
-		}.bind(this))(this.x, this.y)
 	}
 
 	draw(ctx) {
-		this.grid.forEach(elem => elem.draw(ctx, elem.describe().data))
+		for (let row = 0; row < this.y; row++) {
+			ctx.beginPath()
+			ctx.moveTo(0 , this.h * row)
+			ctx.lineTo(WORLD.width, this.h * row)
+			ctx.lineWidth = 2
+			ctx.strokeStyle = 'rgba(255,255,255,0.25)'
+			ctx.closePath()
+			ctx.stroke()
+		}
+
+		for (let col = 0; col < this.x; col++) {
+			ctx.beginPath()
+	    ctx.moveTo(this.w * col, 0)
+	    ctx.lineTo(this.w * col, WORLD.height)
+	    ctx.lineWidth = 2
+	    ctx.strokeStyle = 'rgba(255,255,255,0.25)'
+	    ctx.closePath()
+	    ctx.stroke()
+		}
 	}
 }

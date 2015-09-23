@@ -2,20 +2,20 @@
 import 'styles/desktop.scss'
 
 // Utilities
-import setup from './utils/setup'
+import setup from 'utils/setup'
 
 // Controllers
-import renderers from './controllers/renderer'
+import renderers from 'controllers/renderer'
 
 // Constants
-import WORLD from './constants/world'
-import Grid   from './components/Grid'
+import WORLD from 'constants/world'
+import Grid   from 'components/Grid'
 
 // Workers
-import GameWorker  from './workers/game.w'
+import GameWorker  from 'workers/game.w'
 
 // Graphics
-import clouds from './graphics/clouds'
+import clouds from 'graphics/clouds'
 
 /*
   Bootstrap
@@ -23,7 +23,7 @@ import clouds from './graphics/clouds'
 
 const ctx      = document.querySelector('#canvas').getContext('2d'),
       cloudCtx = document.querySelector('#clouds').getContext('2d'),
-      grid     = new Grid(WORLD.width / 20)
+      grid     = new Grid(75)
 
 // Configure canvas text
 ctx.textBaseline = 'center';

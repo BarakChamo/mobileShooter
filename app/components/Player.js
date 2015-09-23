@@ -1,10 +1,11 @@
-import WORLD       from '../constants/world'
+import WORLD       from 'constants/world'
 import {Circle, Arc}    from './Shapes'
 import Marker      from './Marker'
-import Triggers    from '../controllers/Triggers'
-import Orientation from '../controllers/Orientation'
+import Triggers    from 'controllers/Triggers'
+import Orientation from 'controllers/Orientation'
 
-import { movable, collidable, kevin, describe } from '../mixins'
+import { movable, collidable, kevin, describe } from 'mixins'
+import { minMax } from 'utils/helpers'
 
 // let maxDistance = Math.sqrt(Math.pow(WORLD.width, 2) + Math.pow(WORLD.height, 2))
 
@@ -58,7 +59,7 @@ export default class Player extends Circle {
     const a = component.action
 
     if (component.playerThatFired === this.id) return
-    if (a.health) this.health += a.health
+    if (a.health) this.health = minMax(this.health + a.health, WORLD.player.health)
 
     this.checkLife()
   }
@@ -86,13 +87,13 @@ export default class Player extends Circle {
       // Cross
       ctx.beginPath()
       ctx.rect(0 - params.r, 0, params.r * 2, 1)
-      ctx.fillStyle = 'black'
+      ctx.fillStyle = 'white'
       ctx.fill()
       ctx.closePath()
 
       ctx.beginPath()
       ctx.rect(0, 0 - params.r * 2, 1, params.r * 3)
-      ctx.fillStyle = 'black'
+      ctx.fillStyle = 'white'
       ctx.fill()
       ctx.closePath()
 
@@ -107,7 +108,8 @@ export default class Player extends Circle {
     ctx.moveTo(params.x,params.y)
     // console.log(params.x, params.y, params.marker.x, params.marker.y)
     ctx.lineTo(params.marker.data.x,params.marker.data.y)
-    ctx.lineWidth = 2
+    ctx.lineWidth = 1
+    ctx.strokeStyle = 'rgba(255,255,255,0.25)'
     ctx.closePath()
     ctx.stroke()
 

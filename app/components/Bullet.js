@@ -1,15 +1,14 @@
-import WORLD       from '../constants/world'
+import WORLD       from 'constants/world'
 import { Rectangle } from './Shapes'
-import { movable, collidable, kevin } from '../mixins'
-
+import { movable, collidable, kevin, glow } from 'mixins'
 /*
   Bullet
  */ 
 
-@movable @collidable @kevin({health: WORLD.bullet.damage})
+@movable @collidable @kevin({health: WORLD.bullet.damage}) @glow('white', 3)
 export default class Bullet extends Rectangle {
   constructor(x, y, xV, yV, rotation, playerId) {
-    super(x, y, 5, 5, 'black')
+    super(x, y, 5, 5, 'transparent')
 
     this.playerThatFired = playerId
     this.xVelocity = WORLD.bullet.speed * Math.cos(rotation + (Math.PI * 90 / 180)) + xV / 2;
@@ -28,5 +27,14 @@ export default class Bullet extends Rectangle {
     if (this.playerThatFired === component.id) return
 
     this.remove()
+  }
+
+  draw(ctx, params) {
+    ctx.lineWidth = 1
+    ctx.strokeStyle = 'white'
+
+    super.draw(ctx, params)
+
+    ctx.stroke()
   }
 }

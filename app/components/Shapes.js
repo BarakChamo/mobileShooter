@@ -1,6 +1,6 @@
-import WORLD   from '../constants/world'
+import WORLD   from 'constants/world'
 import Base    from './Base'
-import { describe } from '../mixins'
+import { describe } from 'mixins'
 
 @describe('x', 'y')
 class Shape extends Base {

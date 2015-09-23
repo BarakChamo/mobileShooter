@@ -1,7 +1,7 @@
-import Player from '../components/Player'
-import Bullet from '../components/Bullet'
-import Marker from '../components/Marker'
-import Drop   from '../components/Drop'
+import Player from 'components/Player'
+import Bullet from 'components/Bullet'
+import Marker from 'components/Marker'
+import Drop   from 'components/Drop'
 
 export default {
   Player: Player.prototype.draw,

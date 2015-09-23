@@ -73,7 +73,8 @@ module.exports = [
         resolve: {
             modulesDirectories: [
                 'node_modules', 
-                'resources' 
+                'resources',
+                'app'
             ]
         },
 
@@ -180,7 +181,8 @@ module.exports = [
         resolve: {
             modulesDirectories: [
                 'node_modules', 
-                'resources' 
+                'resources',
+                'app'
             ]
         },
 

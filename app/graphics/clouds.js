@@ -1,4 +1,4 @@
-import WORLD from '../constants/world'
+import WORLD from 'constants/world'
 
 export default function clouds(ctx2){
   const c1 = document.createElement('CANVAS'),
