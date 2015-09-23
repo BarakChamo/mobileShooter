@@ -136,7 +136,7 @@ function update(dt) {
 
 let time = 0
 
-let start = _.debounce(function(){
+let start = _.throttle(function(){
   const now = Date.now(),
         dt  = time ? (now - time) / 1000 : 1 / 60
 
