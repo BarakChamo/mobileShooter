@@ -1,10 +1,11 @@
 import WORLD       from 'constants/world'
-import {Circle, Arc}    from './Shapes'
 import Marker      from './Marker'
 import Triggers    from 'controllers/Triggers'
 import Orientation from 'controllers/Orientation'
+import Emoji       from './Emoji'
 
-import { movable, collidable, kevin, describe } from 'mixins'
+import { Circle, Arc }    from './Shapes'
+import { movable, collidable, kevin, describe, glow } from 'mixins'
 import { minMax } from 'utils/helpers'
 
 // let maxDistance = Math.sqrt(Math.pow(WORLD.width, 2) + Math.pow(WORLD.height, 2))
@@ -15,7 +16,7 @@ import { minMax } from 'utils/helpers'
 @describe('x', 'y', 'r', 'color', 'rotation', 'marker', 'health')
 export default class Player extends Circle {
   constructor(x, y, id) {
-    super(x, y, WORLD.player.radius, 'red')
+    super(x, y, WORLD.player.radius, 'transparent')
 
     this.id = id
     this.controller = new Orientation()
@@ -76,10 +77,9 @@ export default class Player extends Circle {
   }
 
   draw(ctx, params) {
-    // Ball
     super.draw(ctx, params)
       
-      ctx.save()
+    ctx.save()
 
       ctx.translate(params.x, params.y)
       ctx.rotate(params.rotation)
@@ -99,23 +99,26 @@ export default class Player extends Circle {
 
       // ctx.font = (params.r * 2) + "pt Arial"
       // ctx.fillText('🌝', -params.r, params.r)
+      ctx.globalAlpha = 0.9
+      Emoji.prototype.draw(ctx, {
+        x: params.r * 2,
+        y: params.r * 2
+      })
 
     ctx.restore()
 
     // Line from marker to player
-        // Marker to player line
+    // Marker to player line
     ctx.beginPath()
     ctx.moveTo(params.x,params.y)
-    // console.log(params.x, params.y, params.marker.x, params.marker.y)
     ctx.lineTo(params.marker.data.x,params.marker.data.y)
     ctx.lineWidth = 1
     ctx.strokeStyle = 'rgba(255,255,255,0.25)'
     ctx.closePath()
     ctx.stroke()
 
-
+    // Additional visual props
     Arc.prototype.draw(ctx, Object.assign(params, {startAngle: -0.5,endAngle: params.health / WORLD.player.health * 2, color:'rgba(255,255,255,0.4)', r: params.r + 7}))
-
     Marker.prototype.draw(ctx, params.marker.data)
   }
 }

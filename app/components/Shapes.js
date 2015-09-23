@@ -1,9 +1,9 @@
 import WORLD   from 'constants/world'
 import Base    from './Base'
-import { describe } from 'mixins'
+import { describe, glow } from 'mixins'
 
 @describe('x', 'y')
-class Shape extends Base {
+export class Shape extends Base {
   constructor(x, y) {
     super(x, y)
 
@@ -101,6 +101,7 @@ export class Rectangle extends Shape {
   }
 }
 
+@glow('white', 3)
 @describe('x', 'y', 'r', 'color')
 export class Arc {
   constructor(x, y, r, startAngle, endAngle, color) {

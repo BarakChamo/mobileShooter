@@ -1,6 +1,4 @@
 import 'styles/mobile.scss'
-// import './utils/fulltilt'
-// import './utils/gyro'
 
 // Dependencies
 import SocketIO from 'socket.io-client'
@@ -9,8 +7,10 @@ import SocketIO from 'socket.io-client'
 import sounds from 'controllers/Sound'
 
 // Graphics
-import clouds from 'graphics/clouds'
+import clouds  from 'graphics/clouds'
+import { Arc } from './components/Shapes'
 
+// Constants
 import WORLD  from 'constants/world'
 
 // is on an inconsistent apple device?!?
@@ -20,11 +20,13 @@ let id     = (window.localStorage.getItem('playerId') || Math.random().toString(
     socket = SocketIO.connect(window.location.host + '/controller',{query: 'playerId='+id})
 
 let pole = false,
-    calibrated = false,
-    first = false;
+    calibrated = false
 
 // Set player id for reconnection
 window.localStorage.setItem('playerId', id)
+
+// Canvases
+const hud = document.getElementById('hud').getContext('2d')
 
 
 /*
@@ -37,26 +39,28 @@ sounds.load('sad',   'sounds/sad.mp3')
 
 
 /*
-  Initialize socket connection
+  Device event handlers
 */ 
+
+let faya = _.throttle(function() {
+  sounds.play('pew')
+
+  socket.emit('device:fire', {
+    id: id,
+    strength: 1
+  })
+}, 10)
 
 socket.on('connect', function(){
   pole = false
   calibrated = false
-  first = false
-
-
-  /*
-    Device event handlers
-  */ 
 
   // Join console room
   socket.emit('device:join', (location.pathname.replace('/','') || prompt('What room?!?')).toLowerCase(), function(data){
     window.addEventListener('deviceorientation', updateOrientation)
     document.addEventListener('touchstart', faya)
   })
-
-});
+})
 
 
 /*
@@ -64,11 +68,8 @@ socket.on('connect', function(){
 */ 
 
 let updateOrientation = _.throttle(function(event) {
-  if (!first) return first = true
   pole = calibrated ? pole : event.alpha
   calibrated = calibrated || true
-
-  // document.getElementById('a').innerText =  event.absolute
 
   socket.emit('device:position', {
     // room: ROOM_TEMP
@@ -79,20 +80,6 @@ let updateOrientation = _.throttle(function(event) {
       gamma: event.gamma
     },
     a: event.absolute
-  })
-}, 10)
-
-/*
-  Fire handler
-*/ 
-
-let faya = _.throttle(function() {
-  sounds.play('pew')
-
-  socket.emit('device:fire', {
-    // room: ROOM_TEMP
-    id: id,
-    strength: 1
   })
 }, 10)
 
@@ -109,27 +96,17 @@ socket.on('trigger:dead', function() {
 
 socket.on('trigger:hit', function(params) {
   health.endAngle = params[0].health / WORLD.player.health * 2
-  ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
-  health.draw(ctx, health)
+  hud.clearRect(0, 0, window.innerWidth, window.innerHeight)
+  health.draw(hud, health)
 })
-
 
 
 /*
   Animation for the HUD
 */
 
-import { Arc } from './components/Shapes'
-
-const ctx = document.getElementById('hud').getContext('2d')
-
-ctx.canvas.height = window.innerHeight
-ctx.canvas.width = window.innerWidth
-
 const health = new Arc(window.innerWidth / 2, window.innerHeight / 2, 100, -0.5, 2, 'white')
-
-health.draw(ctx, health)
-
+health.draw(hud, health)
 
 
 /*

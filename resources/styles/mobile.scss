@@ -1,28 +1,23 @@
-// @import "bootstrap";
+$color-background: #ffffff;
 
 html, body {
   height: 100%;
   width: 100%;
 }
 
-$color-background: #ffffff;
-$color-logo: white;
-
 body {
-  background-color: $color-background;
-  // display: table-row;
-  vertical-align: middle;
   color: white;
-  text-transform: uppercase;
-  text-align: center;
-  font-family: futura !important;
-
+  background-color: $color-background;
+  
   margin: 0;
   padding: 0;
 
+  text-align: center;
+  font-family: futura !important;
+  text-transform: uppercase;
+
   transform: translate3d(0,0,0);
   -webkit-transform: translate3d(0,0,0);
-
   will-change: transform, -webkit-transform;
 }
 
@@ -33,7 +28,12 @@ span {
 }
 
 .logo {
-  width: 250px;
+  $logo-color:  white;
+  $logo-width:  250px;
+  $logo-height: 50px;
+  $logo-block:  15px;
+
+  width: $logo-width;
   height: 50px;
   line-height: 50px;
   text-align: center;
@@ -44,45 +44,45 @@ span {
   font-weight: light;
   color: transparent !important;
    -webkit-text-stroke-width: 0.5px;
-   -webkit-text-stroke-color: $color-logo;
+   -webkit-text-stroke-color: $logo-color;
   letter-spacing: 0.2em;
 
   transform: translate(-50%,-50%);
   -webkit-transform: translate(-50%,-50%);
   
-  &::before, &::after {
+  &:before, &:after {
     content: "";
-    display: block;
-    width: 15px;
-    height: 15px;
-    background: $color-logo;
     position: absolute;
+    display: block;
+    width: $logo-block;
+    height: $logo-block;
+    background: $logo-color;
     animation: load .8s infinite alternate ease-in-out;
     -webkit-animation: load .8s infinite alternate ease-in-out;
   }
   
-  &::before {
+  &:before {
     top: 0;
   }
-  
-  &::after {
+
+  &:after {
     bottom: 0;
+  }
+
+  @keyframes load {
+    0% { left: 0; height: 30px; width: 15px }
+    50% { height: 8px; width: 40px }
+    100% { left: $logo-width - $logo-block; height: $logo-block * 2; width: $logo-block}
+  }
+
+  @-webkit-keyframes load {
+    0% { left: 0; height: 30px; width: 15px }
+    50% { height: 8px; width: 40px }
+    100% { left: $logo-width - $logo-block; height: $logo-block * 2; width: $logo-block}
   }
 }
 
-@keyframes load {
-  0% { left: 0; height: 30px; width: 15px }
-  50% { height: 8px; width: 40px }
-  100% { left: 235px; height: 30px; width: 15px}
-}
-
-@-webkit-keyframes load {
-  0% { left: 0; height: 30px; width: 15px }
-  50% { height: 8px; width: 40px }
-  100% { left: 235px; height: 30px; width: 15px}
-}
-
-#clouds {
+#clouds, #hud {
   position: fixed;
   top: 0;
   bottom: 0;
