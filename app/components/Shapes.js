@@ -134,7 +134,7 @@ export class Arc {
   Circle
  */ 
 
-@describe('x', 'y', 'r', 'color')
+@describe('x', 'y', 'r', 'rotation', 'color')
 export class Circle extends Shape {
   constructor(x, y, r, color) {
     super(x, y)
@@ -146,15 +146,15 @@ export class Circle extends Shape {
   draw(ctx, params) {
     ctx.save()
 
-    ctx.translate(params.x, params.y)
-    ctx.rotate(params.rotation)
+      ctx.translate(params.x, params.y)
+      ctx.rotate(params.rotation)
 
-    // Ball
-    ctx.beginPath()
-    ctx.arc(0, 0, params.r, 0, 2*Math.PI)
-    ctx.fillStyle = params.color
-    ctx.fill()
-    ctx.stroke()
+      // Ball
+      ctx.beginPath()
+      ctx.arc(0, 0, params.r, 0, 2*Math.PI)
+      ctx.fillStyle = params.color
+      ctx.fill()
+      ctx.stroke()
 
     ctx.restore()
   }
