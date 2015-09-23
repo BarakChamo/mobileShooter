@@ -55,4 +55,8 @@ gameWorker.onmessage = function(event){
 
 gameWorker.onerror = error => console.log(error)
 
-gameWorker.postMessage((location.pathname.replace('/','') || prompt('WHAT ROOM?!?!')).toLowerCase())
+// Get room or push room state
+let room = (location.pathname.replace('/','') || prompt('WHAT ROOM?!?!')).toLowerCase()
+history.replaceState(null, null, 'kevin')
+
+gameWorker.postMessage(room)
