@@ -1,7 +1,7 @@
 export default {
   width: 1500.0,
   height: 1000.0,
-  framerate: 60,
+  framerate: 30,
   resolution: 1,
   
   phase: 1,
