@@ -55,8 +55,11 @@ socket.on('connect', function(){
   pole = false
   calibrated = false
 
+  let room = (location.pathname.replace('/','') || location.hash || prompt('WHAT ROOM?!?!')).toLowerCase()
+  history.replaceState ? history.replaceState(null, null, 'kevin') : location.hash = 'room'
+
   // Join console room
-  socket.emit('device:join', (location.pathname.replace('/','') || prompt('What room?!?')).toLowerCase(), function(data){
+  socket.emit('device:join', room, function(data){
     window.addEventListener('deviceorientation', updateOrientation)
     document.addEventListener('touchstart', faya)
   })
