@@ -1,0 +1,36 @@
+.health {
+  display:inline-block;
+  height:200px;
+  width:200px;
+  border:solid 5px black;
+  background:#159;
+  border-radius:100%;
+  margin:1em;
+  position:relative;
+  text-align:center;
+  line-height:200px;
+  color:white;
+  font-size:2em;
+  transform:rotate(45deg);
+  box-shadow:0 0 5px black, inset 0 0 5px #48a;
+
+  border-top-color:tomato;
+  border-right-color:tomato;
+
+  &:before,
+  &:after {
+    content:'';
+    position:absolute;
+    top:-5px;
+    left:-5px;
+    border:solid 5px transparent;
+    height:inherit;
+      width:inherit;
+    border-radius:inherit;
+  }
+  
+  &:before {
+    border-right-color:black;
+    transform:rotate(18deg)
+  }
+}

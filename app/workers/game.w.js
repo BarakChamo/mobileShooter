@@ -2,7 +2,6 @@
 import SocketIO from 'socket.io-client'
 
 // Utilities
-import Raf   from 'utils/raf'
 import setup from 'utils/setup'
 
 // Constants
@@ -135,9 +134,20 @@ function update(dt) {
   Launch
  */ 
 
-let raf = new Raf()
+let time = 0
 
-raf.start(function(elapsed) {
-  var state = update(elapsed)
+let start = _.debounce(function(){
+  const now = Date.now(),
+        dt  = time ? (now - time) / 1000 : 1 / 60
+
+  // Re-set last time frame
+  time = now
+
+  var state = update(dt)
   postMessage(state /*,[state]*/)
-})
+
+  // Re-run
+  start()
+}, 1000/WORLD.framerate)
+
+start()
