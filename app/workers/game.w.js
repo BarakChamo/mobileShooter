@@ -112,10 +112,12 @@ socket.on('client:test', function (data) {
 function update(dt) {
   playerStore.runOnAll((player, i) => player.update(dt))
   bulletStore.runOnAll((bullet, i) => bullet.update(dt))
+    dropStore.runOnAll((drop, i)   => drop.update(dt))
   
   bulletStore.runOnAll((bullet, i) => collisionManager.report(bullet))
-    dropStore.runOnAll((drop, i)   => collisionManager.report(drop))
   playerStore.runOnAll((player, i) => collisionManager.report(player))
+    dropStore.runOnAll((drop, i) => collisionManager.report(drop))
+
 
   playerStore.runOnAll((player, i) => collisionManager.checkForCollision(player)) 
 
@@ -123,7 +125,7 @@ function update(dt) {
 
   playerStore.runOnAll((player, i) => state.push(player.describe()))
   bulletStore.runOnAll((bullet, i) => state.push(bullet.describe()))
-  dropStore.runOnAll((drop, i)     => state.push(drop.describe()))
+    dropStore.runOnAll((drop, i)     => state.push(drop.describe()))
 
   return state
 }

@@ -126,7 +126,7 @@ const ctx = document.getElementById('hud').getContext('2d')
 ctx.canvas.height = window.innerHeight
 ctx.canvas.width = window.innerWidth
 
-const health = new Arc(window.innerWidth / 2, window.innerHeight / 2, 100, -0.5, 2, 'black')
+const health = new Arc(window.innerWidth / 2, window.innerHeight / 2, 100, -0.5, 2, 'white')
 
 health.draw(ctx, health)
 

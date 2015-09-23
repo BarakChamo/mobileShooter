@@ -18,7 +18,7 @@ export default class Player extends Circle {
 
     this.id = id
     this.controller = new Orientation()
-    this.marker = new Marker(200, 200, 20, 3, 'blue')
+    this.marker = new Marker(200, 200, 5, 'rgba(255, 255, 255, 0.25)')
 
     this.health = WORLD.player.health
   }
@@ -96,10 +96,20 @@ export default class Player extends Circle {
       ctx.fill()
       ctx.closePath()
 
-      ctx.font = (params.r * 2) + "pt Arial"
+      // ctx.font = (params.r * 2) + "pt Arial"
       // ctx.fillText('🌝', -params.r, params.r)
 
     ctx.restore()
+
+    // Line from marker to player
+        // Marker to player line
+    ctx.beginPath()
+    ctx.moveTo(params.x,params.y)
+    // console.log(params.x, params.y, params.marker.x, params.marker.y)
+    ctx.lineTo(params.marker.data.x,params.marker.data.y)
+    ctx.lineWidth = 2
+    ctx.closePath()
+    ctx.stroke()
 
 
     Arc.prototype.draw(ctx, Object.assign(params, {startAngle: -0.5,endAngle: params.health / WORLD.player.health * 2, color:'rgba(255,255,255,0.4)', r: params.r + 7}))

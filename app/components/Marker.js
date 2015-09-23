@@ -3,9 +3,9 @@ import WORLD       from '../constants/world'
 import { movable } from '../mixins'
 
 @movable
-export default class Marker extends Polygon {
-	constructor(x, y, radius, sides, color) {
-		super(x, y, radius, sides, color)
+export default class Marker extends Circle {
+	constructor(x, y, radius, color) {
+		super(x, y, radius, color)
 	}
 
 	update(controllerX, controllerY, rotation, dt) {

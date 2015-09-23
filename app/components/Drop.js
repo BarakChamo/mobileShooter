@@ -17,4 +17,8 @@ export default class Drop extends Circle {
 
     this.remove()
   }
+
+  update(dt){
+  	
+  }
 }
