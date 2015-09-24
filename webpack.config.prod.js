@@ -169,7 +169,11 @@ module.exports = [
                     test: /\.json$/, 
                     loader: 'json'
                 },
+<<<<<<< HEAD
                 
+=======
+
+>>>>>>> mobilefix
                 {   // CSS Loader
                     test: /\.css$/,  
                     loader: ExtractTextPlugin.extract("style-loader", "css-loader") 
