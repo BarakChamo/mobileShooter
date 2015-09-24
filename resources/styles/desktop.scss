@@ -16,6 +16,7 @@ canvas#clouds {
   position: absolute;
   left: 50%;
   top: 0;
+  z-index: -1;
 
   transform: translateX(-50%);
   -webkit-transform: translateX(-50%);
