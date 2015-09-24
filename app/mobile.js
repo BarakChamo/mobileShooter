@@ -27,6 +27,8 @@ window.localStorage.setItem('playerId', id)
 
 // Canvases
 const hud = document.getElementById('hud').getContext('2d')
+hud.canvas.width = window.innerWidth
+hud.canvas.height = window.innerHeight
 
 
 /*
@@ -91,18 +93,42 @@ let updateOrientation = _.throttle(function(event) {
   Game event handlers
 */ 
 
-socket.on('trigger:dead', function() {
+function die() {
   sounds.play('sad')
   // navigator.vibrate && navigator.vibrate([200, 100, 200, 100, 200])
   alert('you died')
-})
+}
 
 socket.on('trigger:hit', function(params) {
-  health.endAngle = params[0].health / WORLD.player.health * 2
-  hud.clearRect(0, 0, window.innerWidth, window.innerHeight)
-  health.draw(hud, health)
+  let newAngle =  params[0].health / WORLD.player.health * 2
+
+  animateValue(health, 'endAngle', newAngle, 10, function(){
+    hud.clearRect(0, 0, window.innerWidth, window.innerHeight)
+    health.draw(hud, health)
+    if (health.endAngle <= 0) die()
+  })
 })
 
+
+function animateValue(target, key, value, delay, fn) {  
+  const interval = setInterval(function(){
+    // console.log(target[key], value)
+    if (target[key] < value) {
+      target[key] = Number((target[key] + 0.01).toFixed(2))
+      fn()
+    }
+
+    else if (target[key] > value) {
+      target[key] = Number((target[key] - 0.01).toFixed(2))
+      fn()
+    }
+    
+    if (target[key] === value) {
+      clearInterval(interval)
+      return
+    }
+  }, delay)
+}
 
 /*
   Animation for the HUD
@@ -116,4 +142,4 @@ health.draw(hud, health)
   Cloud background
 */ 
 
-clouds(document.querySelector('#clouds').getContext('2d'))
+// clouds(document.querySelector('#clouds').getContext('2d'))

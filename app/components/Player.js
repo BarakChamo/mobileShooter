@@ -60,16 +60,17 @@ export default class Player extends Circle {
     const a = component.action
 
     if (component.playerThatFired === this.id) return
-    if (a.health) this.health = minMax(this.health + a.health, WORLD.player.health)
-
-    this.checkLife()
+    if (a.health) {
+      this.health = minMax(this.health + a.health, WORLD.player.health)
+      this.checkLife()
+    }
   }
 
   checkLife(){
-    if (this.health > 0) return Triggers.trigger('hit', this, {health: this.health})
+    Triggers.trigger('hit', this, {health: this.health})
 
-    Triggers.trigger('dead', this)
-    this.remove()
+    // Triggers.trigger('dead', this)
+    if (this.health <= 0) this.remove()
   }
 
   handleOrientation(event) {
