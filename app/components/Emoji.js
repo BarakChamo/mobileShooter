@@ -29,10 +29,11 @@ export default class Emoji extends Shape {
 		super(x, y)
 	}
 
-	draw(ctx, params) {
-		!loaded && loadImages()
+	draw(ctx, params, emojiName) {
+		// !loaded && loadImages()
 		
-		const e = emoji.smirk
+		const e = loadImage('images/emoji/' + emojiName)
+		// console.log(e)
 		
 		ctx.save()
 			ctx.drawImage(e.i, e.x, e.y, e.w, e.h, -params.x / 2, -params.y / 2, params.x, params.y)

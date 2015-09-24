@@ -40,16 +40,14 @@ var ctrl = io.of('/controller'),
 
 // Controller sockets events
 ctrl.on('connection', function(socket){
-  // Controller handshake
-  cnsl.emit('client:connect', { id: socket.handshake.query.playerId, socketId: socket.id })
-
-
   /*
     Controller events
   */ 
 
   // Join room
   socket.on('device:join', function(data, callback){
+    cnsl.emit('client:connect', { id: socket.handshake.query.playerId, socketId: socket.id, emoji: data.emoji })
+
     socket.join(data.room)
     socket.room = data.room
     callback(data)

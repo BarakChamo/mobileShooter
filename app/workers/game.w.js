@@ -39,7 +39,7 @@ let collisionManager = new CollisionController(WORLD.player.radius * 5)
 
 let chaosManager = new Chaos(Drop, 5000, drop => dropStore.add(drop) && collisionManager.add(drop))
 
-playerStore.add(WORLD.width / 2, WORLD.height / 2, 'test')
+playerStore.add(WORLD.width / 2, WORLD.height / 2, 'test', 'smirk.png')
 
 
 
@@ -68,9 +68,7 @@ chaosManager.start()
 socket.on('client:connect', function(data) {
   if (!data.id) return
 
-    console.log(data)
-
-  let player = playerStore.add(WORLD.width / 2, WORLD.height / 2, data.id)
+  let player = playerStore.add(WORLD.width / 2, WORLD.height / 2, data.id, data.emoji)
 
   triggerManager.register(player, data.socketId)
   collisionManager.add(player)
@@ -117,7 +115,7 @@ function update(dt) {
   
   bulletStore.runOnAll((bullet, i) => collisionManager.report(bullet))
   playerStore.runOnAll((player, i) => collisionManager.report(player))
-    dropStore.runOnAll((drop, i) => collisionManager.report(drop))
+    dropStore.runOnAll((drop, i)   => collisionManager.report(drop))
 
 
   playerStore.runOnAll((player, i) => collisionManager.checkForCollision(player)) 
@@ -126,7 +124,7 @@ function update(dt) {
 
   playerStore.runOnAll((player, i) => state.push(player.describe()))
   bulletStore.runOnAll((bullet, i) => state.push(bullet.describe()))
-    dropStore.runOnAll((drop, i)     => state.push(drop.describe()))
+    dropStore.runOnAll((drop, i)   => state.push(drop.describe()))
 
   return state
 }

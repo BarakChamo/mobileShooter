@@ -13,14 +13,15 @@ import { minMax } from 'utils/helpers'
 @movable 
 @collidable 
 @kevin({health: WORLD.player.damage})
-@describe('x', 'y', 'r', 'color', 'rotation', 'marker', 'health')
+@describe('x', 'y', 'r', 'color', 'rotation', 'marker', 'health', 'emojiName')
 export default class Player extends Circle {
-  constructor(x, y, id) {
+  constructor(x, y, id, emoji) {
     super(x, y, WORLD.player.radius, 'transparent')
 
     this.id = id
     this.controller = new Orientation()
     this.marker = new Marker(200, 200, 5, 'rgba(255, 255, 255, 0.25)')
+    this.emojiName = emoji
 
     this.health = WORLD.player.health
   }
@@ -101,7 +102,7 @@ export default class Player extends Circle {
       Emoji.prototype.draw(ctx, {
         x: params.r * 2,
         y: params.r * 2
-      })
+      }, params.emojiName)
 
     ctx.restore()
 
