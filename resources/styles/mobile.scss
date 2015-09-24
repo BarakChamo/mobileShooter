@@ -52,3 +52,12 @@ span {
   left: 0;
   right: 0;
 }
+
+#player-emoji {
+  position: absolute;
+  top: 50%;
+  left:50%;
+  width: 100px;
+  margin-top: -50px;
+  margin-left: -50px;
+}
