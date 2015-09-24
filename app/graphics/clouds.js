@@ -1,22 +1,20 @@
 import WORLD from 'constants/world'
 
-export default function clouds(ctx2){
-  const c1 = document.createElement('CANVAS'),
-        // c2 = document.createElement('CANVAS'),
-        c3 = document.createElement('CANVAS')
+let img = new Image()
 
-  const ctx1 = c1.getContext('2d'),
-        // ctx2 = c2.getContext('2d'),
-        ctx3 = c3.getContext('2d')
+const c1 = document.createElement('CANVAS'),
+      c2 = document.createElement('CANVAS')
 
+const ctx1 = c1.getContext('2d'),
+      ctx2 = c2.getContext('2d')
+
+export default function clouds(ctx){
   const w = WORLD.width  / 2, 
         h = WORLD.height / 2
  
   let dt, 
       nt, 
       ot = 0
-
-  let img = new Image()
 
   class Cloud {
     constructor(p, ctx){
@@ -39,7 +37,7 @@ export default function clouds(ctx2){
       this.p = p
       
       this.ctx.globalAlpha = o
-      this.ctx.drawImage(c3, this.sy + this.p, this.sy + this.p, w - ( this.p * 2 ), h - ( this.p * 2 ), 0, 0, w, h)
+      this.ctx.drawImage(c2, this.sy + this.p, this.sy + this.p, w - ( this.p * 2 ), h - ( this.p * 2 ), 0, 0, w, h)
     }
   }
 
@@ -51,8 +49,8 @@ export default function clouds(ctx2){
 
   c1.width  = WORLD.width  / 2
   c1.height = WORLD.height / 2
-  c3.width  = WORLD.width
-  c3.height = WORLD.height
+  c2.width  = WORLD.width
+  c2.height = WORLD.height
       
   function loop() {
     nt = new Date().getTime()
@@ -71,13 +69,13 @@ export default function clouds(ctx2){
       clouds[i].move(dt)
     } 
 
-    ctx2.drawImage( c1 ,0,0, WORLD.width, WORLD.height)
+    ctx.drawImage( c1 ,0,0, WORLD.width, WORLD.height)
 
     setTimeout( loop, 10 )
   }
 
   img.onload = function() {
-    ctx3.drawImage(img, 0,0, w * 2, h * 2)
+    ctx2.drawImage(img, 0,0, w * 2, h * 2)
     loop()
   }
 

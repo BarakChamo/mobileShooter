@@ -100,9 +100,10 @@ export default class Player extends Circle {
       // Draw emoji
       ctx.globalAlpha = 0.9
       Emoji.prototype.draw(ctx, {
-        x: params.r * 2,
-        y: params.r * 2
-      }, params.emojiName)
+        x:     params.r * 2,
+        y:     params.r * 2,
+        emoji: params.emojiName
+      })
 
     ctx.restore()
 

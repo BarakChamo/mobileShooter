@@ -68,7 +68,6 @@ let updateOrientation = _.throttle(function(event) {
   calibrated = calibrated || true
 
   socket.emit('device:position', {
-    // room: ROOM_TEMP
     id: id,
     event:  {
       alpha: ios ? event.alpha : Math.abs(360 + event.alpha - pole) % 360,
