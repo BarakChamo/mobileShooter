@@ -90,7 +90,7 @@ socket.on('client:motion', function (data) {
 socket.on('client:fire', function (data) {
   let player = playerStore.getChild(data.id)
 
-  if (!player.x) return
+  if (!player || !player.x) return
 
   let bullet = bulletStore.add(player.x, player.y, player.xVelocity, player.yVelocity, player.rotation, player.id)
   
