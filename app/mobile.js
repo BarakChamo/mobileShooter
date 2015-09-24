@@ -135,3 +135,18 @@ health.draw(hud, health)
 */ 
 
 // clouds(document.querySelector('#clouds').getContext('2d'))
+
+const emoji = require('templates/emoji.json')
+const dialogTemplate = require('templates/emoji.jade')
+const emojiDialog = document.getElementById('emoji')
+
+emojiDialog.innerHTML = dialogTemplate({emoji:emoji.list})
+emojiDialog.style.display = 'block'
+emojiDialog.addEventListener('click', function(e) {
+  const _emoji = e.target.attributes['data-emoji'].value
+  
+  emojiDialog.style.display = 'none'
+  localStorage.setItem('emoji', _emoji)
+  
+  socket.emit('device:setplayer', _emoji)
+})

@@ -1,0 +1,39 @@
+.dialog {
+	position: absolute;
+	top:0;
+	bottom:0;
+	left: 0;
+	right:0;
+	background-color: black;
+
+	color: teal;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	z-index: 9999;
+	padding-top: 10px;
+	padding-bottom: 50px;
+
+	color: transparent !important;
+	-webkit-text-stroke-width: 0.5px;
+	-webkit-text-stroke-color: teal;
+	
+	text-align: center;
+	font-family: futura !important;
+	text-transform: uppercase;
+}
+
+.emoji {
+	// display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+	// display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+	// display: -ms-flexbox;      /* TWEENER - IE 10 */
+	// display: -webkit-flex;     /* NEW - Chrome */
+	// display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+	// flex-flow: row wrap;
+	// justify-content: space-around;
+}
+
+.emoji div {
+	display:inline;
+	padding: 20px;
+	width: 33%;
+} 
