@@ -17,7 +17,8 @@ import WORLD  from 'constants/world'
 const ios = navigator.userAgent.match(/iPhone|iPad/)
 
 let id     = (window.localStorage.getItem('playerId') || Math.random().toString(36).substring(2,7)),
-    socket = SocketIO.connect(window.location.host + '/controller',{query: 'playerId='+id})
+    socket = SocketIO.connect(window.location.host + '/controller',{query: 'playerId='+id}),
+    room
 
 let pole = false,
     calibrated = false
@@ -57,14 +58,8 @@ socket.on('connect', function(){
   pole = false
   calibrated = false
 
-  let room = (location.pathname.replace('/','') || location.hash || prompt('WHAT ROOM?!?!')).toLowerCase()
+  room = (location.pathname.replace('/','') || location.hash || prompt('WHAT ROOM?!?!')).toLowerCase()
   history.replaceState ? history.replaceState(null, null, 'kevin') : location.hash = 'room'
-
-  // Join console room
-  socket.emit('device:join', room, function(data){
-    window.addEventListener('deviceorientation', updateOrientation)
-    document.addEventListener('touchstart', faya)
-  })
 })
 
 
@@ -135,3 +130,27 @@ health.draw(hud, health)
 */ 
 
 // clouds(document.querySelector('#clouds').getContext('2d'))
+
+/*
+  Load emoji list
+*/
+
+const emoji = require('templates/emoji.json')
+const dialogTemplate = require('templates/emoji.jade')
+const emojiDialog = document.getElementById('emoji')
+
+emojiDialog.innerHTML = dialogTemplate({emoji:emoji.list})
+emojiDialog.show()
+emojiDialog.addEventListener('click', function(e) {
+  const _emoji = e.target.attributes['data-emoji'].value
+  
+  emojiDialog.close()
+  localStorage.setItem('emoji', _emoji)
+
+    // Join console room
+  socket.emit('device:join', {room: room, player: {emoji: _emoji}}, function(data){
+    window.addEventListener('deviceorientation', updateOrientation)
+    document.addEventListener('touchstart', faya)
+  })
+
+})

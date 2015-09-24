@@ -49,10 +49,10 @@ ctrl.on('connection', function(socket){
   */ 
 
   // Join room
-  socket.on('device:join', function(room, callback){
-    socket.join(room)
-    socket.room = room
-    callback(room)
+  socket.on('device:join', function(data, callback){
+    socket.join(data.room)
+    socket.room = data.room
+    callback(data)
   })
 
   // Update position

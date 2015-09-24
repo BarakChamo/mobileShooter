@@ -1,0 +1,32 @@
+dialog {
+	position: absolute;
+	top:0;
+	bottom:0;
+	background-color: black;
+
+	color: teal;
+	overflow: scroll;
+	z-index: 9999;
+	padding-top: 10px;
+	padding-bottom: 50px;
+	height: auto;
+	width: auto;
+
+	color: transparent !important;
+	-webkit-text-stroke-width: 0.5px;
+	-webkit-text-stroke-color: teal;
+	
+	text-align: center;
+	font-family: futura !important;
+	text-transform: uppercase;
+}
+
+.emoji {
+	display:flex;
+	flex-flow: row wrap;
+	justify-content: space-around;
+}
+
+.emoji div {
+	width: 33%;
+} 

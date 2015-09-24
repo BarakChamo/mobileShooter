@@ -52,6 +52,11 @@ module.exports = [
                     loader: 'jade'
                 },
 
+                {   // JSON Loader
+                    test: /\.json$/, 
+                    loader: 'json'
+                },
+
                 {   // CSS Loader
                     test: /\.css$/,  
                     loader: ExtractTextPlugin.extract("style-loader", "css-loader") 
@@ -160,6 +165,11 @@ module.exports = [
                     loader: 'jade'
                 },
 
+                {   // JSON Loader
+                    test: /\.json$/, 
+                    loader: 'json'
+                },
+                
                 {   // CSS Loader
                     test: /\.css$/,  
                     loader: ExtractTextPlugin.extract("style-loader", "css-loader") 

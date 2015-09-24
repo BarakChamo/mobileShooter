@@ -68,6 +68,8 @@ chaosManager.start()
 socket.on('client:connect', function(data) {
   if (!data.id) return
 
+    console.log(data)
+
   let player = playerStore.add(WORLD.width / 2, WORLD.height / 2, data.id)
 
   triggerManager.register(player, data.socketId)
