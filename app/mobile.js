@@ -153,16 +153,16 @@ if (localStorage.getItem('emoji')) {
     emoji:require('templates/emoji.json').list
   }), 'text/html').getElementById('emoji')
 
-  parser = null
+  parser = undefined
 
   document.body.appendChild(emojiDialog)
 
   emojiDialog.addEventListener('click', function(e) {    
     if (!e.target.attributes['data-emoji']) return
-      
-    localStorage.setItem('emoji', e.target.attributes['data-emoji'].value)
-    emojiDialog.style.remove()
 
+    localStorage.setItem('emoji', e.target.attributes['data-emoji'].value)
+    emojiDialog.remove()
+    emojiDialog = undefined
     join()
   })
 }
