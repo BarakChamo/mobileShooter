@@ -4,7 +4,7 @@ import Triggers    from 'controllers/Triggers'
 import Orientation from 'controllers/Orientation'
 import Emoji       from './Emoji'
 
-import { Circle, Arc }    from './Shapes'
+import { Circle, Arc, Polygon }    from './Shapes'
 import { movable, collidable, kevin, describe, glow } from 'mixins'
 import { minMax } from 'utils/helpers'
 
@@ -85,21 +85,18 @@ export default class Player extends Circle {
       ctx.translate(params.x, params.y)
       ctx.rotate(params.rotation)
 
-      // Cross
-      ctx.beginPath()
-      ctx.rect(0 - params.r, 0, params.r * 2, 1)
-      ctx.fillStyle = 'white'
-      ctx.fill()
-      ctx.closePath()
+      // Draw canon
+      ctx.fillStyle = 'rgba(255,255,255,0.5)'
+      Polygon.prototype.draw(ctx, {
+        color: 'white',
+        x: 0,
+        y: -params.r * 1.75,
+        sides: 3,
+        r: params.r / 3,
+        rotation: 0.5
+      })
 
-      ctx.beginPath()
-      ctx.rect(0, 0 - params.r * 2, 1, params.r * 3)
-      ctx.fillStyle = 'white'
-      ctx.fill()
-      ctx.closePath()
-
-      // ctx.font = (params.r * 2) + "pt Arial"
-      // ctx.fillText('🌝', -params.r, params.r)
+      // Draw emoji
       ctx.globalAlpha = 0.9
       Emoji.prototype.draw(ctx, {
         x: params.r * 2,
@@ -109,17 +106,18 @@ export default class Player extends Circle {
     ctx.restore()
 
     // Line from marker to player
-    // Marker to player line
     ctx.beginPath()
-    ctx.moveTo(params.x,params.y)
-    ctx.lineTo(params.marker.data.x,params.marker.data.y)
-    ctx.lineWidth = 1
-    ctx.strokeStyle = 'rgba(255,255,255,0.25)'
+      ctx.moveTo(params.x,params.y)
+      ctx.lineTo(params.marker.data.x,params.marker.data.y)
+      ctx.lineWidth = 1
+      ctx.strokeStyle = 'rgba(255,255,255,0.25)'
     ctx.closePath()
     ctx.stroke()
 
-    // Additional visual props
+    // Draw health arc
     Arc.prototype.draw(ctx, Object.assign(params, {startAngle: -0.5,endAngle: params.health / WORLD.player.health * 2, color:'rgba(255,255,255,0.4)', r: params.r + 7}))
+
+    // Draw pointer marker
     Marker.prototype.draw(ctx, params.marker.data)
   }
 }

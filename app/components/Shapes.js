@@ -59,8 +59,7 @@ export class Polygon extends Shape {
 
     ctx.closePath()
     ctx.lineWidth = 1
-    ctx.setLineDash([5])
-    ctx.stroke()
+    ctx.fill()
 
     ctx.restore()
 
@@ -70,7 +69,7 @@ export class Polygon extends Shape {
 /*
   Triangle
  */ 
-
+@describe('x', 'y', 'color')
 export class Triangle extends Polygon {
   constructor(x, y, color) {
     super([[x, y],[x + 50, y],[x + 25, y - 50]], color)
@@ -101,7 +100,7 @@ export class Rectangle extends Shape {
   }
 }
 
-@glow('white', 3)
+@glow('white', 2)
 @describe('x', 'y', 'r', 'color')
 export class Arc {
   constructor(x, y, r, startAngle, endAngle, color) {
