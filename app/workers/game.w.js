@@ -39,7 +39,7 @@ let collisionManager = new CollisionController(WORLD.player.radius * 5)
 
 let chaosManager = new Chaos(Drop, 5000, drop => dropStore.add(drop) && collisionManager.add(drop))
 
-playerStore.add(WORLD.width / 2, WORLD.height / 2, 'test', 'smirk.png')
+// playerStore.add(WORLD.width / 2, WORLD.height / 2, 'test', 'smirk.png')
 
 
 
