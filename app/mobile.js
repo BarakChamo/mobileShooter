@@ -148,5 +148,5 @@ emojiDialog.addEventListener('click', function(e) {
   emojiDialog.style.display = 'none'
   localStorage.setItem('emoji', _emoji)
   
-  socket.emit('device:setplayer', _emoji)
+  console.log(_emoji)
 })
