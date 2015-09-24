@@ -102,9 +102,10 @@ function die() {
 socket.on('trigger:hit', function(params) {
   let newAngle =  params[0].health / WORLD.player.health * 2
 
-  animateValue(health, 'endAngle', newAngle, 10, function(){
+   animateValue(health, 'endAngle', newAngle, 10, function(){
     hud.clearRect(0, 0, window.innerWidth, window.innerHeight)
     health.draw(hud, health)
+
     if (health.endAngle <= 0) die()
   })
 })
@@ -112,21 +113,12 @@ socket.on('trigger:hit', function(params) {
 
 function animateValue(target, key, value, delay, fn) {  
   const interval = setInterval(function(){
-    // console.log(target[key], value)
-    if (target[key] < value) {
-      target[key] = Number((target[key] + 0.01).toFixed(2))
-      fn()
-    }
-
-    else if (target[key] > value) {
-      target[key] = Number((target[key] - 0.01).toFixed(2))
+    if (target[key] !== value){
+      target[key] = Number((target[key] < value ? target[key] + 0.01 : target[key] - 0.01).toFixed(2))
       fn()
     }
     
-    if (target[key] === value) {
-      clearInterval(interval)
-      return
-    }
+    if (target[key] === value) clearInterval(interval)
   }, delay)
 }
 
