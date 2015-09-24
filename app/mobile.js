@@ -25,6 +25,9 @@ let pole = false,
 // Set player id for reconnection
 window.localStorage.setItem('playerId', id)
 
+let room = (location.pathname.replace('/','') || location.hash || prompt('WHAT ROOM?!?!')).toLowerCase()
+history.replaceState ? history.replaceState(null, null, 'kevin') : location.hash = 'room'
+
 // Canvases
 const hud = document.getElementById('hud').getContext('2d')
 hud.canvas.width = window.innerWidth
@@ -126,25 +129,40 @@ health.draw(hud, health)
 
 // clouds(document.querySelector('#clouds').getContext('2d'))
 
-const emoji = require('templates/emoji.json')
-const dialogTemplate = require('templates/emoji.jade')
-const emojiDialog = document.getElementById('emoji')
 
-emojiDialog.innerHTML = dialogTemplate({emoji:emoji.list})
-emojiDialog.style.display = 'block'
-emojiDialog.addEventListener('click', function(e) {
-  const _emoji = e.target.attributes['data-emoji'].value
-  
-  emojiDialog.style.display = 'none'
-  localStorage.setItem('emoji', _emoji)
-  
-  let room = (location.pathname.replace('/','') || location.hash || prompt('WHAT ROOM?!?!')).toLowerCase()
-  history.replaceState ? history.replaceState(null, null, 'kevin') : location.hash = 'room'
+/*
+  Start game
+*/ 
 
+function join(){
   // Join console room
-  socket.emit('device:join', {room: room, emoji: _emoji}, function(data){
+  socket.emit('device:join', {
+    room: room, 
+    emoji: localStorage.getItem('emoji')
+  }, function(data){
     window.addEventListener('deviceorientation', updateOrientation)
     document.addEventListener('touchstart', faya)
+  })  
+}
+
+if (localStorage.getItem('emoji')) {
+  join()
+} else {
+  let parser      = new DOMParser(),
+      emojiDialog = parser.parseFromString(require('templates/emoji.jade')({
+    emoji:require('templates/emoji.json').list
+  }), 'text/html').getElementById('emoji')
+
+  parser = null
+
+  document.body.appendChild(emojiDialog)
+
+  emojiDialog.addEventListener('click', function(e) {    
+    if (!e.target.attributes['data-emoji']) return
+      
+    localStorage.setItem('emoji', e.target.attributes['data-emoji'].value)
+    emojiDialog.style.remove()
+
+    join()
   })
-  console.log(_emoji)
-})
+}
