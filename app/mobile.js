@@ -148,4 +148,8 @@ emojiDialog.addEventListener('click', function(e) {
   emojiDialog.style.display = 'none'
   localStorage.setItem('emoji', _emoji)
   
+<<<<<<< HEAD
+=======
+  console.log(_emoji)
+>>>>>>> mobilefix
 })
