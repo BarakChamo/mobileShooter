@@ -10,7 +10,8 @@ export default {
 	  canvas.width = WORLD.width * r
 
 	  WORLD.height *= WORLD.resolution
-	  WORLD.width *=  WORLD.resolution
+	  WORLD.width  *=  WORLD.resolution
+	  WORLD.r 			= r 
 
 	  canvas.style.marginTop = rw <= rh ? String((window.innerHeight - canvas.height) / 2) + 'px' : 0
 

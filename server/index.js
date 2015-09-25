@@ -46,8 +46,6 @@ ctrl.on('connection', function(socket){
 
   // Join room
   socket.on('device:join', function(data, callback){
-    cnsl.emit('client:connect', { id: socket.handshake.query.playerId, socketId: socket.id, emoji: data.emoji })
-
     socket.join(data.room)
     socket.room = data.room
     callback(data)
@@ -55,6 +53,9 @@ ctrl.on('connection', function(socket){
 
   // Update position
   socket.on('device:position', function(data){
+    data.id  = socket.handshake.query.playerId
+    data.sid = socket.id
+
     cnsl.to(socket.room).emit('client:position', data)
   })
 

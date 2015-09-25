@@ -17,7 +17,8 @@ import WORLD  from 'constants/world'
 const ios = navigator.userAgent.match(/iPhone|iPad/)
 
 let id     = (window.localStorage.getItem('playerId') || Math.random().toString(36).substring(2,7)),
-    socket = SocketIO.connect(window.location.host + '/controller',{query: 'playerId='+id})
+    socket = SocketIO.connect(window.location.host + '/controller',{query: 'playerId='+id}),
+    player = {id : id}
 
 let pole = false,
     calibrated = false
@@ -71,13 +72,12 @@ let updateOrientation = _.throttle(function(event) {
   calibrated = calibrated || true
 
   socket.emit('device:position', {
-    id: id,
     event:  {
       alpha: ios ? event.alpha : Math.abs(360 + event.alpha - pole) % 360,
       beta:  event.beta,
       gamma: event.gamma
     },
-    a: event.absolute
+    p: player
   })
 }, 10)
 
@@ -137,13 +137,15 @@ health.draw(hud, health)
 function join(){
   const _e = localStorage.getItem('emoji')
 
+  // Set emoji to player object
+  player.e = _e
+
   // Set User Emoji
   document.getElementById('player-emoji').src = 'images/emoji/' + _e
 
   // Join console room
   socket.emit('device:join', {
-    room: room, 
-    emoji: _e
+    room: room
   }, function(data){
     window.addEventListener('deviceorientation', updateOrientation)
     document.addEventListener('touchstart', faya)

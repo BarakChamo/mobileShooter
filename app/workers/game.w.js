@@ -64,21 +64,20 @@ chaosManager.start()
   Event Handlers
  */ 
 
-// Client connection
-socket.on('client:connect', function(data) {
-  if (!data.id) return
-
-  let player = playerStore.add(WORLD.width / 2, WORLD.height / 2, data.id, data.emoji)
-
-  triggerManager.register(player, data.socketId)
-  collisionManager.add(player)
-})
-
 // Client position update
 socket.on('client:position', function (data) {
-  if (!data.event || !playerStore.getChild(data.id)) return
+  // Make sure data is valid
+  if (!data.p) return
 
-  playerStore.getChild(data.id).handleOrientation(data.event)
+  if (!playerStore.getChild(data.p.id)) {  
+    let player = playerStore.add(WORLD.width / 2, WORLD.height / 2, data.id, data.p.e)
+
+    triggerManager.register(player, data.sid)
+    collisionManager.add(player)
+
+  }
+
+  playerStore.getChild(data.p.id).handleOrientation(data.event)
 })
 
 // Client motion

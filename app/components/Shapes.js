@@ -17,9 +17,13 @@ export class Shape extends Base {
       data: {}
     }
  
-    this._describe.forEach(key => (desc.data[key] = this[key] instanceof Shape ? this[key].describe() : this[key]) )
+    this._describe.forEach(key => (desc.data[key] = this[key] instanceof Shape ? this[key].describe() : this.scale(key)) )
 
     return desc
+  }
+
+  scale(key) {
+    return ( this._scale && key in this._scale ) >= 0 ? this[key] * WORLD.r : this[key]
   }
 }
 
