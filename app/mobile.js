@@ -25,8 +25,8 @@ let pole = false,
 // Set player id for reconnection
 window.localStorage.setItem('playerId', id)
 
-let room = (location.pathname.replace('/','') || location.hash || prompt('WHAT ROOM?!?!')).toLowerCase()
-history.replaceState ? history.replaceState(null, null, 'kevin') : location.hash = 'room'
+let room = (location.pathname.replace('/','') || prompt('WHAT ROOM?!?!')).toLowerCase()
+history.replaceState ? history.replaceState(null, null, room) : location.pathname = room
 
 // Canvases
 const hud = document.getElementById('hud').getContext('2d')
