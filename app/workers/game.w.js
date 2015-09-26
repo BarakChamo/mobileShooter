@@ -74,7 +74,6 @@ socket.on('client:position', function (data) {
 
     triggerManager.register(player, data.sid)
     collisionManager.add(player)
-
   }
 
   playerStore.getChild(data.p.id).handleOrientation(data.event)
@@ -95,6 +94,10 @@ socket.on('client:fire', function (data) {
   
   collisionManager.add(bullet)
   player.fire(bullet)
+})
+
+socket.on('console:notify', function(data) {
+  postMessage({type: 'notify', message: data.message} )
 })
 
 // Any test events
@@ -124,7 +127,7 @@ function update(dt) {
   playerStore.runOnAll((player, i) => state.push(player.describe()))
   bulletStore.runOnAll((bullet, i) => state.push(bullet.describe()))
     dropStore.runOnAll((drop, i)   => state.push(drop.describe()))
-
+  
   return state
 }
 
@@ -143,7 +146,7 @@ let start = _.throttle(function(){
   time = now
 
   var state = update(dt)
-  postMessage(state /*,[state]*/)
+  postMessage({type: 'render', state: state} /*,[state]*/)
 
   // Re-run
   start()

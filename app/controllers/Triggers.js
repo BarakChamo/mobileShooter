@@ -16,6 +16,10 @@ class TriggerController {
   trigger(event, component, ...params){
     this.socket.emit('client:event', {sid: socketMap.get(component), event: `trigger:${event}`, params: params})
   }
+
+  notify(message) {
+    this.socket.emit('console:notify', {message: message })
+  }
 }
 
 export default new TriggerController()

@@ -63,15 +63,20 @@ export default class Player extends Circle {
     if (component.playerThatFired === this.id) return
     if (a.health) {
       this.health = minMax(this.health + a.health, WORLD.player.health)
-      this.checkLife()
+      this.checkLife(component)
     }
   }
 
-  checkLife(){
+  checkLife(bullet){
     Triggers.trigger('hit', this, {health: this.health})
 
     // Triggers.trigger('dead', this)
-    if (this.health <= 0) this.remove()
+    if (this.health <= 0) this.die(bullet)
+  }
+
+  die(bullet) {
+    Triggers.notify(`${this.id} was killed by ${bullet.playerThatFired}`)
+    this.remove()
   }
 
   handleOrientation(event) {

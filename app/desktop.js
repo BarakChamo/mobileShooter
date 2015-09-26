@@ -10,6 +10,7 @@ import renderers from 'controllers/renderer'
 // Constants
 import WORLD from 'constants/world'
 import Grid   from 'components/Grid'
+import HUD   from 'components/HUD'
 
 // Workers
 import GameWorker  from 'workers/game.w'
@@ -23,7 +24,8 @@ import clouds from 'graphics/clouds'
 
 const ctx      = document.querySelector('#canvas').getContext('2d'),
       cloudCtx = document.querySelector('#clouds').getContext('2d'),
-      grid     = new Grid(75)
+      grid     = new Grid(75),
+      hud      = new HUD(document)
 
 // Configure canvas text
 ctx.textBaseline = 'center';
@@ -44,13 +46,19 @@ function render(gameState) {
   gameState.forEach(s => renderers[s.type](ctx, s.data))
 }
 
+function notify(message) {
+  console.log(message)
+  hud.notify(message)
+}
+
 clouds(cloudCtx)
 
 const gameWorker  = new GameWorker()
 
 // Initialize game state worker
-gameWorker.onmessage = function(event){
-  render(event.data)
+gameWorker.onmessage = function(event) {
+  if (event.data.type === 'render') return render(event.data.state)
+  if (event.data.type === 'notify') return notify(event.data.message)
 }
 
 gameWorker.onerror = error => console.log(error)

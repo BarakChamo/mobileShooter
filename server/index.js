@@ -90,6 +90,10 @@ cnsl.on('connection', function(socket){
   socket.on('client:event', function(data) {
     ctrl.to(data.sid).emit(data.event, data.params)
   })
+
+  socket.on('console:notify', function(data) {
+    cnsl.emit('console:notify', data)
+  })
 })
 
 
