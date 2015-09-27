@@ -18,6 +18,8 @@ export default class Player extends Circle {
   constructor(x, y, id, emoji) {
     super(x, y, WORLD.player.radius, 'transparent')
 
+    Triggers.notify(`${this.id} has joined the game`)
+
     this.id = id
     this.controller = new Orientation()
     this.marker = new Marker(200, 200, 5, 'rgba(255, 255, 255, 0.25)')
