@@ -96,6 +96,7 @@ socket.on('client:fire', function (data) {
   player.fire(bullet)
 })
 
+// Handle notifications
 triggerManager.on('notify', function(data) {
   postMessage({type: 'notify', message: data.message} )
 })

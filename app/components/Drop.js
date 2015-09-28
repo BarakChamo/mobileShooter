@@ -10,6 +10,12 @@ export default class Drop extends Circle {
   	super(x, y, 15, 'transparent')
   	this.x = x
   	this.y = y
+
+    this.selfDestruct()
+  }
+
+  selfDestruct(){
+    setTimeout(() => this && this.remove(), 10000)
   }
 
   collide(component) {

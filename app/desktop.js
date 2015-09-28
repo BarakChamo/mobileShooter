@@ -24,7 +24,6 @@ import clouds from 'graphics/clouds'
 
 const ctx      = document.querySelector('#canvas').getContext('2d'),
       cloudCtx = document.querySelector('#clouds').getContext('2d'),
-      grid     = new Grid(75),
       hud      = new HUD()
 
 // Configure canvas text
@@ -33,6 +32,9 @@ ctx.textBaseline = 'center';
 // Set canvas dimension
 setup.setDimensions(ctx.canvas, ctx)
 setup.setDimensions(cloudCtx.canvas, cloudCtx)
+
+// Initialize grid
+const grid = new Grid(75, ctx)
 
 document.querySelector('#hud').appendChild(hud.render())
 
