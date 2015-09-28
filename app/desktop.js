@@ -25,7 +25,7 @@ import clouds from 'graphics/clouds'
 const ctx      = document.querySelector('#canvas').getContext('2d'),
       cloudCtx = document.querySelector('#clouds').getContext('2d'),
       grid     = new Grid(75),
-      hud      = new HUD(document)
+      hud      = new HUD()
 
 // Configure canvas text
 ctx.textBaseline = 'center';
@@ -34,6 +34,7 @@ ctx.textBaseline = 'center';
 setup.setDimensions(ctx.canvas, ctx)
 setup.setDimensions(cloudCtx.canvas, cloudCtx)
 
+document.querySelector('#hud').appendChild(hud.render())
 
 function render(gameState) {
   // Clear canvas
@@ -47,7 +48,6 @@ function render(gameState) {
 }
 
 function notify(message) {
-  console.log(message)
   hud.notify(message)
 }
 
@@ -57,8 +57,18 @@ const gameWorker  = new GameWorker()
 
 // Initialize game state worker
 gameWorker.onmessage = function(event) {
-  if (event.data.type === 'render') return render(event.data.state)
-  if (event.data.type === 'notify') return notify(event.data.message)
+  switch(event.data.type){
+    case 'render': 
+      render(event.data.state)
+      break
+
+    case 'notify':
+      notify(event.data.message)
+      break
+
+    default:
+      break
+  }
 }
 
 gameWorker.onerror = error => console.log(error)

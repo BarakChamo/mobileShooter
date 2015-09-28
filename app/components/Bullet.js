@@ -7,10 +7,10 @@ import { movable, collidable, kevin, glow } from 'mixins'
 
 @movable @collidable @kevin({health: WORLD.bullet.damage}) @glow('white', 3)
 export default class Bullet extends Rectangle {
-  constructor(x, y, xV, yV, rotation, playerId) {
+  constructor(x, y, xV, yV, rotation, player) {
     super(x, y, 5, 5, 'transparent')
 
-    this.playerThatFired = playerId
+    this.playerThatFired = player
     this.xVelocity = WORLD.bullet.speed * Math.cos(rotation + (Math.PI * 90 / 180)) + xV / 2;
     this.yVelocity = WORLD.bullet.speed * Math.sin(rotation + (Math.PI * 90 / 180)) + yV / 2;
   }
@@ -24,7 +24,7 @@ export default class Bullet extends Rectangle {
   }
 
   collide(component) {
-    if (this.playerThatFired === component.id) return
+    if (this.playerThatFired === component) return
 
     this.remove()
   }

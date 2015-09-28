@@ -1,8 +1,10 @@
+import Base from 'components/Base'
+
 let socketMap = new WeakMap()
 
-class TriggerController {
+class TriggerController extends Base {
   constructor(){
-
+    super()
   }
 
   initialize(socket){
@@ -18,8 +20,9 @@ class TriggerController {
   }
 
   notify(message) {
-    this.socket.emit('console:notify', {message: message })
+    this.emit('notify', {message: message })
   }
 }
 
+// Export singleton
 export default new TriggerController()

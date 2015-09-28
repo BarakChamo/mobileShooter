@@ -1,0 +1,55 @@
+.hud,
+.hud-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.notifications {
+  $color-content: lightblue;
+  color: $color-content;
+  float: right;
+
+  .n_list {
+    list-style: none;
+    margin: 16px;
+
+            transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0,0,0);
+
+    li {
+      padding: 0.5em 1em;
+      margin-bottom: 0;
+      background-color: rgba(173, 216, 230, 0.25);
+      border-radius: 0.25em;
+      border: 1px solid rgba(173, 216, 230, 0.33);
+      font-family: courier;
+      font-weight: 100;
+      font-size: 0.75em;
+      letter-spacing: 1px;
+      color: rgba(255, 255, 255, 0.66);
+
+      opacity: 0;
+      margin-top: -28px;
+
+      -webkit-transition: opacity 0.8s, margin-top 0.8s;
+              transition: opacity 0.8s, margin-top 0.8s;
+
+      will-change: opacity, margin-top;
+
+      &.shown {
+        opacity: 1;
+        margin-top: 0;
+        margin-bottom: 1em;
+      }
+
+      &.shown.hidden {
+        opacity: 0;
+        margin-top: 28px;
+        margin-bottom: 1em;
+      }
+    }
+  }
+}

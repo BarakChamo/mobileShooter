@@ -22,12 +22,29 @@
 	text-align: center;
 	font-family: futura !important;
 	text-transform: uppercase;
+	letter-spacing: 1px;
+
+	input {		
+    background-color: transparent;
+    border: 2px solid teal;
+		color: transparent !important;
+		-webkit-text-stroke-width: 1px;
+		-webkit-text-stroke-color: teal;
+		letter-spacing: 1px;
+    font-size: 1.5em;
+    max-width: 75%;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    text-align: center;
+		font-family: futura !important;
+		text-transform: uppercase;
+	}
 }
 
 .list {
 	position: absolute;
 	display: block;
-	top: 110px;
+	top: 200px;
 	bottom: 0;
 	width: 100%;
 
@@ -47,6 +64,7 @@
 	
 	&:before {
 		content: '';
+		pointer-events: none;
 		display: block;
 		position: absolute;
 		width: 100%;
@@ -72,4 +90,5 @@
 	&:after {
 
 	}
+
 }

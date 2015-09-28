@@ -135,13 +135,15 @@ health.draw(hud, health)
 */ 
 
 function join(){
-  const _e = localStorage.getItem('emoji')
+  const _e = localStorage.getItem('emoji'),
+        _n = localStorage.getItem('name')
 
   // Set emoji to player object
   player.e = _e
+  player.n = _n
 
   // Set User Emoji
-  document.getElementById('player-emoji').src = 'images/emoji/' + _e
+  document.getElementById('player-emoji').src      = 'images/emoji/' + _e
 
   // Join console room
   socket.emit('device:join', {
@@ -165,9 +167,12 @@ if (localStorage.getItem('emoji')) {
   document.body.appendChild(emojiDialog)
 
   emojiDialog.addEventListener('click', function(e) {    
-    if (!e.target.attributes['data-emoji']) return
+    const eElm = e.target.attributes['data-emoji'],
+          nElm = document.getElementById('name')
+    if (!eElm && !nElm.value) return
 
     localStorage.setItem('emoji', e.target.attributes['data-emoji'].value)
+    localStorage.setItem('name',    document.getElementById('name').value)
 
     emojiDialog.remove()
     emojiDialog = undefined

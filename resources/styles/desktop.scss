@@ -26,16 +26,3 @@ canvas#clouds {
   transform: translateX(-50%);
   -webkit-transform: translateX(-50%);
 }
-
-.hud {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-.notifications {
-  $color-content: lightblue;
-  color: $color-content;
-}

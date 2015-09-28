@@ -70,7 +70,7 @@ socket.on('client:position', function (data) {
   if (!data.p) return
 
   if (!playerStore.getChild(data.p.id)) {  
-    let player = playerStore.add(WORLD.width / 2, WORLD.height / 2, data.id, data.p.e)
+    let player = playerStore.add(WORLD.width / 2, WORLD.height / 2, data.id, data.p.e, data.p.n)
 
     triggerManager.register(player, data.sid)
     collisionManager.add(player)
@@ -90,13 +90,13 @@ socket.on('client:fire', function (data) {
 
   if (!player || !player.x) return
 
-  let bullet = bulletStore.add(player.x, player.y, player.xVelocity, player.yVelocity, player.rotation, player.id)
+  let bullet = bulletStore.add(player.x, player.y, player.xVelocity, player.yVelocity, player.rotation, player)
   
   collisionManager.add(bullet)
   player.fire(bullet)
 })
 
-socket.on('console:notify', function(data) {
+triggerManager.on('notify', function(data) {
   postMessage({type: 'notify', message: data.message} )
 })
 

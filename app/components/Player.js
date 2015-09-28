@@ -13,19 +13,20 @@ import { minMax } from 'utils/helpers'
 @movable 
 @collidable 
 @kevin({health: WORLD.player.damage})
-@describe('x', 'y', 'r', 'color', 'rotation', 'marker', 'health', 'emojiName')
+@describe('x', 'y', 'r', 'color', 'rotation', 'marker', 'health', 'emojiName', 'name')
 export default class Player extends Circle {
-  constructor(x, y, id, emoji) {
+  constructor(x, y, id, emoji, name) {
     super(x, y, WORLD.player.radius, 'transparent')
-
-    Triggers.notify(`${this.id} has joined the game`)
 
     this.id = id
     this.controller = new Orientation()
     this.marker = new Marker(200, 200, 5, 'rgba(255, 255, 255, 0.25)')
     this.emojiName = emoji
+    this.name = name.toUpperCase()
 
     this.health = WORLD.player.health
+
+    Triggers.notify(`${this.name} has joined the game`)
   }
   
   update(dt) {
@@ -62,7 +63,7 @@ export default class Player extends Circle {
   collide(component) {
     const a = component.action
 
-    if (component.playerThatFired === this.id) return
+    if (component.playerThatFired === this) return
     if (a.health) {
       this.health = minMax(this.health + a.health, WORLD.player.health)
       this.checkLife(component)
@@ -77,7 +78,7 @@ export default class Player extends Circle {
   }
 
   die(bullet) {
-    Triggers.notify(`${this.id} was killed by ${bullet.playerThatFired}`)
+    Triggers.notify(`${bullet.playerThatFired.name} totally killed ${this.name}`)
     this.remove()
   }
 
@@ -91,6 +92,11 @@ export default class Player extends Circle {
     ctx.save()
 
       ctx.translate(params.x, params.y)
+
+      ctx.font = '13px futura'
+      ctx.fillStyle = 'rgba(255,255,255,0.75)'
+      ctx.fillText(params.name, params.r, params.r * 2)
+
       ctx.rotate(params.rotation)
 
       // Draw canon

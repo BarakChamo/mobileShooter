@@ -1,8 +1,9 @@
 .dialog#emoji
-	.emoji
-		h1 Choose a Character
-		.list
-			.list-inner
-				each e in emoji
-					div
-						img(src='images/emoji/' + e.i, data-emoji=e.i).emoji-icon
+  .emoji
+    h1 Choose a Name & Character
+    input(type="text", id="name")
+    .list
+      .list-inner
+        each e in emoji
+          div
+            img(src='images/emoji/' + e.i, data-emoji=e.i).emoji-icon
