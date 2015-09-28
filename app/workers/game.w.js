@@ -30,17 +30,16 @@ import triggerManager from 'controllers/Triggers'
 
 const socket = SocketIO.connect(self.location.host + '/console')
 
-// Initialize component managers
-let playerStore    = new ComponentController(Player)
-let bulletStore    = new ComponentController(Bullet)
-let dropStore      = new ComponentController(Drop)
-let collisionManager = new CollisionController(WORLD.player.radius * 5)
+// Initialize component store
+let playerStore = new ComponentController(Player),
+    bulletStore = new ComponentController(Bullet),
+    dropStore   = new ComponentController(Drop)
 
-
-let chaosManager = new Chaos(Drop, 5000, drop => dropStore.add(drop) && collisionManager.add(drop))
+// Initialize managers
+let collisionManager = new CollisionController(WORLD.player.radius * 5),
+    chaosManager     = new Chaos(Drop, 5000, drop => dropStore.add(drop) && collisionManager.add(drop))
 
 // playerStore.add(WORLD.width / 2, WORLD.height / 2, 'test', 'smirk.png')
-
 
 
 /*
@@ -59,6 +58,7 @@ triggerManager.initialize(socket)
 
 // Initialize chaos monkey
 chaosManager.start()
+
 
 /*
   Event Handlers
