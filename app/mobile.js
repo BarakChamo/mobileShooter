@@ -68,6 +68,7 @@ socket.on('connect', function(){
 */ 
 
 let updateOrientation = _.throttle(function(event) {
+  console.log('updateOrientation')
   pole = calibrated ? pole : event.alpha
   calibrated = calibrated || true
 
